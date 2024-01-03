@@ -25,6 +25,7 @@ body{
   .profile-box {
     background-color: #fff;
     padding: 30px;
+    width: 350px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
@@ -38,12 +39,14 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     padding: 10px;
   }
   
   .avatar-container {
     position: relative;
     width: 150px;
+    margin-left:100px;
     height: 150px;
     margin-bottom: 20px;
   }
@@ -94,7 +97,8 @@ body{
   /* Adjust button style for consistency */  input[type='text'],
   input[type='tel'],
   input[type='email'],
-  button{
+  input[type='password'],
+  .profile-box button{
     margin-bottom: 15px;
     padding: 10px;
     width: calc(100% - 18px);
@@ -104,14 +108,14 @@ body{
   }
   
   /* Button style remains the same */
-  button {
+  .profile-box button {
     background-color: #007bff;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
   }
   
-  button:hover {
+  .profile-box button:hover {
     background-color: #0056b3;
   }
   

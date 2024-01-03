@@ -1,36 +1,19 @@
 import React, { useState } from 'react';
-import './ProfilePage.css'; // Create a CSS file for styling
-import avatar from '../Assets/profile.png';
+// import '../ProfilePage/ProfilePage.css'; // Create a CSS file for styling
+// import './SignupPage.css';
+// import avatar from '../Assets/profile.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const ProfilePage = ({ onUpdate }) => {
+const SignupPage = ({ onUpdate }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [age, setAge] = useState('');
-    const [gender, setGender] = useState('');
-    const [image, setImage] = useState(null);
-    const [previewImage, setPreviewImage] = useState(null);
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreviewImage(reader.result);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            setPreviewImage(null);
-        }
-    };
+    const [password,setPassword] = useState('');
 
 const handleUpdateClick = async (e) => {
         e.preventDefault();
@@ -65,27 +48,12 @@ const handleUpdateClick = async (e) => {
         <div className='profile-page'>
             <div className="profile-container">
                 <div className="profile-box">
-                    <div className='heading'>Profile</div>
+                    <div className='heading'>SignUp</div>
                   
                     
                     <div className="profile-form">
                     <form>
-                        <div className="avatar-container">
-                            <label htmlFor="avatar" className="avatar-label">
-                                {previewImage ? (
-                                    <img src={previewImage} alt="Avatar" className="avatar-preview" />
-                                ) : (
-                                    <div className="avatar-placeholder"><img src={avatar} alt="Avatar" className="avatar-preview"/></div>
-                                )}
-                            </label>
-                            <input
-                                type="file"
-                                id="avatar"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                style={{ display: 'none' }}
-                            />
-                        </div>
+                       
                         <div className="input-group">
                             <input
                                 type="text"
@@ -100,7 +68,7 @@ const handleUpdateClick = async (e) => {
                                 onChange={(e) => setLastName(e.target.value)}
                             />
                         </div>
-                        
+                       
                         <input
                             type="tel"
                             placeholder="Phone Number"
@@ -115,22 +83,15 @@ const handleUpdateClick = async (e) => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <br />
-                        <div className="input-group">
-                            <input
-                                type="text"
-                                placeholder="Age"
-                                value={age}
-                                onChange={(e) => setAge(e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Gender"
-                                value={gender}
-                                onChange={(e) => setGender(e.target.value)}
-                            />
-                        </div>
-                        
-                        <button onClick={handleUpdateClick}>Update</button>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <br />
+
+                        <button onClick={handleUpdateClick}>SignUp</button>
                         
                         </form>
                         
@@ -149,5 +110,5 @@ const handleUpdateClick = async (e) => {
    
    
 
-export default ProfilePage;
+export default SignupPage;
 

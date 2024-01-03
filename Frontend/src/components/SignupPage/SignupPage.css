@@ -1,0 +1,80 @@
+/* Form container styling */
+.signup-page .form-container {
+    width: 100%;
+    max-width: 300px;
+    padding: 16px;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+   }
+   
+   /* Input styling */
+   .signup-page  .form-container input[type=text],
+   .signup-page .form-container input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+   }
+   
+   /* Button styling */
+   .signup-page   .form-container input[type=submit] {
+    width: 100%;
+    padding: 14px 20px;
+    margin: 8px 0;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+   }
+   
+   /* Change color on hover */
+   .signup-page  .form-container input[type=submit]:hover {
+    background-color: #45a049;
+   }
+   
+   /* Reset button styling */
+   .signup-page .form-container input[type=reset] {
+    width: 100%;
+    padding: 14px 20px;
+    margin: 8px 0;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+   }
+   
+   /* Change color on hover */
+   .signup-page  .form-container input[type=reset]:hover {
+    background-color: #e53935;
+   }
+   
+   /* Center forgot password link */
+   .signup-page .form-container .forgot-password {
+    text-align: center;
+    margin-top: 10px;
+    color: #000;
+    font-size: 14px;
+   }
+   
+   /* Visited link color */
+   .signup-page  .form-container .forgot-password a:visited {
+    color: #000;
+   }
+   
+   /* Anchor color */
+   .signup-page  .form-container .forgot-password a {
+    color: #000;
+    text-decoration: none;
+   }
+   
+   /* Hover color */
+   .signup-page  .form-container .forgot-password a:hover {
+    color: #333;
+   }

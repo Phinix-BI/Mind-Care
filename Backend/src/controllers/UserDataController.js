@@ -1,5 +1,5 @@
 import UserDataModel from '../models/UserDataModel.js';
-
+import bcrypt from 'bcrypt';
 export const getUserData = async (req, res) => { 
     try {
         const userId = req.params.id.toString(); // Convert userId to a string
@@ -15,10 +15,14 @@ export const getUserData = async (req, res) => {
 };
 
 export const PostUserData = async (req, res) => {
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
     const userData = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        password: req.body.password,
+        password: hashedPassword,
         email: req.body.email,
         phone : req.body.phone,
     } 
@@ -47,20 +51,25 @@ export const PostUserData = async (req, res) => {
 
 export const UpdateUserData = async (req, res) => {
     const userId = req.params.id.toString();  // Assuming the user ID is passed as a parameter
+    const {firstName} = req.body;
+    const {lastName} = req.body;
+    const {phone} = req.body;
+    const {email} = req.body;
+    const {age} = req.body;
+    const {gender} = req.body;
+
     const userData = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        password: req.body.password,
-        email: req.body.email,
-        age : req.body.age,
-        gender : req.body.gender,
-        phone : req.body.phone,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone : phone,
+        age: age,
+        gender : gender,
     };
 
     let requestData = {
         firstName: userData.firstName,
         lastName: userData.lastName,
-        password: userData.password,
         email: userData.email,
         age : userData.age,
         gender : userData.gender,
