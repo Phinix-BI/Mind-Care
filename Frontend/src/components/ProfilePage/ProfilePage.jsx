@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfilePage.css'; // Create a CSS file for styling
 import avatar from '../Assets/profile.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 const ProfilePage = ({ onUpdate }) => {
     const [firstName, setFirstName] = useState('');
@@ -16,6 +15,30 @@ const ProfilePage = ({ onUpdate }) => {
     const [gender, setGender] = useState('');
     const [image, setImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/user/profile/:id', {
+                    headers: {
+                        'x-auth-token': localStorage.getItem('token'),
+                    },
+                });
+                const { firstName, lastName, phone, email, age, gender } = response.data;
+                setFirstName(firstName);
+                setLastName(lastName);
+                setPhone(phone);
+                setEmail(email);
+                setAge(age);
+                setGender(gender);
+            } catch (error) {
+                console.log(error);
+                toast.error('An error occurred while fetching profile data.');
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -32,14 +55,27 @@ const ProfilePage = ({ onUpdate }) => {
         }
     };
 
-const handleUpdateClick = async (e) => {
+    const handleUpdateClick = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.patch('http://localhost:3000/user/profile/:id', {
-                firstName, lastName, phone, email, age, gender, image, previewImage
+            const formData = new FormData();
+            formData.append('firstName', firstName);
+            formData.append('lastName', lastName);
+            formData.append('phone', phone);
+            formData.append('email', email);
+            formData.append('age', age);
+            formData.append('gender', gender);
+            if (image) {
+                formData.append('image', image);
+            }
+            const response = await axios.patch('http://localhost:3000/user/profile/:id', formData, {
+                headers: {
+                    'x-auth-token': localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                },
             });
             if (response.status === 200) {
-                toast('Profile Updated Succesfully', {
+                toast('Profile Updated Successfully', {
                     position: "top-right",
                     autoClose: 4000,
                     hideProgressBar: false,
@@ -48,7 +84,7 @@ const handleUpdateClick = async (e) => {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
-                    });
+                });
             } else {
                 toast.error('Failed to update profile.');
             }
@@ -57,9 +93,11 @@ const handleUpdateClick = async (e) => {
             toast.error('An error occurred while updating profile.');
         }
     };
-    
 
-
+    const handleLogOut = async() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+    };
     return (
         <>
         <div className='profile-page'>
@@ -135,7 +173,7 @@ const handleUpdateClick = async (e) => {
                         </form>
                         
                         <span className='profile-logout-text' style={{ color: '#808080' }}>come back later?&nbsp;
-                        <span style={{ color: 'red' }}><Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Logout</Link></span></span>
+                        <span style={{ color: 'red' }}><Link to="/Login" onClick={handleLogOut} style={{ textDecoration: 'none', color: 'inherit' }}>Logout</Link></span></span>
                     </div>
                 </div>
             </div>
@@ -145,9 +183,5 @@ const handleUpdateClick = async (e) => {
         </>
     );
 };
-    
-   
-   
 
 export default ProfilePage;
-
