@@ -10,9 +10,12 @@ import dotenv from 'dotenv/config';
 
 
 export const PostUserLogin = async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    console.log(process.env.TOKEN_SECRET);
+
+    const {email} = req.body;
+    const {password} = req.body;
+
+    // console.log(process.env.TOKEN_SECRET);
+
     try{
         const findUser = await UserDataModel.findOne({ email: email });
         if (!findUser) {
@@ -23,18 +26,18 @@ export const PostUserLogin = async (req, res) => {
             return res.status(400).json({ message: "Invalid password" });
         }
 
-        if(findUser && validPassword){
+      
             const token = jwt.sign({ id: findUser._id },process.env.TOKEN_SECRET,{ expiresIn: '2h' });
            
             findUser.token = token;
-            findUser.password = undefined;
+            await findUser.save();
 
                // Set the token as a cookie
             //    res.cookie('auth-token', token, { maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
             res.status(200).send({message: "Login successful", token: token});
-        }
-
-        res.status(200).json(findUser);
+        
+         console.log("Login successful");
+        // res.status(200).json(findUser);
     }catch(error){  
         res.status(404).json({ message: error.message });
     }

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import UserDataRoute from './routes/UserDataRoute.js'; // Import UserDataRoute.js functions
 import UserLoginRoute from './routes/UserLoginRoute.js'; // Import UserLoginRoute.js functions
+// import TestRoutes from './routes/TestRoutes.js'; // Import TestRoute.js functions
 
 import { get } from 'http';
 
@@ -24,6 +25,7 @@ app.use( bodyParser.urlencoded({extended: true}));
 
 app.use('/api', UserDataRoute); // Use UserDataRoute.js for all routes starting with /api
 app.use('/api', UserLoginRoute);
+// app.use('/api', TestRoutes);
 
 app.use(cors());
 
@@ -34,7 +36,7 @@ app.get('/', (req, res) => { // Default route
     res.send('Hello World!'); // Send response to GET requests to /api
 });
 
-
+// app.get('/test', TestRoutes);
 // user profile routes
 
 app.get('/user/profile/:id',UserDataRoute);
