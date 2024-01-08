@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css'; // Create a CSS file for styling
 import avatar from '../Assets/profile.png';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { checkUserToken,setLoginStatus } from '../Utility/authUtils';
 
 const ProfilePage = ({ onUpdate }) => {
+    const navigate = useNavigate();
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -15,6 +18,13 @@ const ProfilePage = ({ onUpdate }) => {
     const [gender, setGender] = useState('');
     const [image, setImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
+   
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+   
+    useEffect(() => {
+        setLoginStatus(setIsLoggedIn);
+        }, [isLoggedIn]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -99,6 +109,7 @@ const ProfilePage = ({ onUpdate }) => {
         localStorage.removeItem('userId');
     };
     return (
+         isLoggedIn ?
         <>
         <div className='profile-page'>
             <div className="profile-container">
@@ -181,7 +192,8 @@ const ProfilePage = ({ onUpdate }) => {
         </div>
         <ToastContainer />
         </>
-    );
+        : navigate('/Login')
+    ); 
 };
 
 export default ProfilePage;
