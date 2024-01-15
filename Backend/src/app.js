@@ -48,4 +48,10 @@ app.delete('/user/profile/:id',UserDataRoute);
 
 app.post('/user/login',UserLoginRoute);
 
+// user forgot password routes
+
+app.post('/user/forgot-password',UserLoginRoute);
+
+
+
 app.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server

@@ -4,11 +4,8 @@ import jwt from 'jsonwebtoken';
 import User from '../models/UserDataModel.js';
 import cookie from 'cookie';
 import dotenv from 'dotenv/config';
-
-
-
-
-
+import nodemailer from 'nodemailer';    
+import otpGenerator from 'otp-generator';
 export const PostUserLogin = async (req, res) => {
 
     const {email} = req.body;
@@ -41,4 +38,58 @@ export const PostUserLogin = async (req, res) => {
     }catch(error){  
         res.status(404).json({ message: error.message });
     }
+}
+
+
+export const forgotPassword = async (req, res) => {
+
+    const {email} = req.body;
+
+    if(email === ''){
+        res.status(400).send('Email required');
+    }
+
+    try{
+        const findUser = await UserDataModel.findOne({ email: email });
+
+        if(!findUser){
+            res.status(403).send('Email is not registered');    
+        }
+
+        const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false });
+
+        const otpExpier = new Date();
+        otpExpier.setMinutes(otpExpier.getMinutes() + 1);
+
+        const response = await UserDataModel.updateOne({email: email}, {otp: otp, otpExpire: otpExpier});
+
+       
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.EMAIL,
+                    pass: process.env.PASSWORD
+                }
+            });
+
+            const mailOptions = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: 'OTP for password reset',
+                html: `<h3>OTP for password reset is </h3><h1 style="font-weight:bold">${otp}</h1>`
+            };
+
+            const result = await transporter.sendMail(mailOptions);
+            
+            res.status(200).send(`OTP sent successfully`);
+       
+
+    }catch(error){
+        res.status(404).json({ message: error.message });
+    }
+
+}
+
+export const resetPassword = async (req, res) => {
+    console.log("reset password");
 }
