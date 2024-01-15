@@ -6,6 +6,7 @@ import { Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Button from '../Button/Button';
 
 
 const SignupPage = ({ onCreate }) => {
@@ -94,8 +95,8 @@ const handleCreateClick = async (e) => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <br />
-
-                        <button onClick={handleCreateClick}>SignUp</button>
+                        
+                        <Button text= "SignUp"/>
                         
                         </form>
                         

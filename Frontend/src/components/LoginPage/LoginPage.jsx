@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import styles from './LoginPage.module.css';
 // import '../ProfilePage/ProfilePage.css'; // Create a CSS file for styling
 // import './SignupPage.css';
 // import avatar from '../Assets/profile.png';
+
 import { Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NavBar from '../NavBar/NavBar';
+import Button from '../Button/Button';
 
 
 const LoginPage = ({ onCreate }) => {
@@ -47,41 +51,45 @@ const handleLoginClick = async (e) => {
 
     return (
         <>
-        <div className='profile-page'>
-            <div className="profile-container">
-                <div className="profile-box">
-                    <div className='heading'>LogIn</div>
-                  
-                    <div className="profile-form">
-                    <form>
-                       
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <br />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <br />
+        <NavBar />
+        <section className={`${styles.login_page} `}>
+        
+        <div className={`${styles.login_page_form} `}>
+            <h1 className={`${styles.login_page_heading} `}>Welcome Back,</h1>
+            <h1 className={`${styles.login_page_heading} `}>Howard</h1>
+            <from>
+                <div className={`${styles.login_form} `}>
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
 
-                        <button onClick={handleLoginClick}>LogIn</button>
-                        
-                        </form>
-                        
-                        <span className='profile-logout-text' style={{ color: '#808080' }}>Not a Member&nbsp;
-                        <span style={{ color: 'red' }}><Link to="/SignupPage" style={{ textDecoration: 'none', color: 'inherit' }}>Register Now</Link></span></span>
-                    </div>
+                <div className={`${styles.login_form} `}>
+                    <label htmlFor="email">Paassword</label>
+                    <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+            </from>
+
+            <Button text="Login"/>
+            <div className={styles.abc}>
+                <div className={`${styles.login_page_remember_me} `}>
+                    <input type="checkbox" id="remember_me" />
+                    <label htmlFor="remember_me">Remember Me</label>
+                </div>
+                <div className={`${styles.forgot_password} `}>
+                    <Link to="/ForgotPassword">Forgot Password?</Link>
                 </div>
             </div>
-          
+
+            <div className={`${styles.login_page_signup} `}>
+                <p>Don't have an account? <a href="/SignupPage">Sign Up</a></p>
+            </div>
         </div>
+        <div className={`${styles.login_page_img} `}>
+            <img src="public\images\5861790.webp" alt="login" />
+        </div>
+
         <ToastContainer />
+        </section>
         </>
     );
 };

@@ -1,0 +1,23 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    height: 72px;
+    padding: 0 8px;
+    align-items: center;
+}
+  
+.navbar ul {
+    display: flex;
+    list-style: none;
+    gap: 24px;
+    font-weight: 500px;
+}
+
+/* Main Page */
+.container {
+    display: flex;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 40px;
+    align-items: end;
+}
