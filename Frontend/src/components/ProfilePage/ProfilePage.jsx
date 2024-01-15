@@ -108,6 +108,7 @@ const ProfilePage = ({ onUpdate }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
     };
+    
     return (
          isLoggedIn ?
         <>
