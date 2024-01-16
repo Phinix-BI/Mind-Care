@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import styles from './PasswordInput.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const PasswordInput = () => {
-  const [password, setPassword] = useState('');
+const PasswordInput = ({password, setPassword}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePassword = () => {
