@@ -70,7 +70,7 @@ const handleLoginClick = async (e) => {
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div> */}
                <PassowrdInput />
-            </from>
+            </form>
 
             <div className={styles.abc}>
                 <div className={`${styles.login_page_remember_me} `}>
