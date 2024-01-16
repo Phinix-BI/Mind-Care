@@ -65,10 +65,11 @@ const handleLoginClick = async (e) => {
                     <input type="email" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
 
-                {/* <div className={`${styles.login_form} `}>
+{/*                 <div className={`${styles.login_form} `}>
                     <label htmlFor="email">Paassword</label>
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </div>
+                </div> */}
+               <PassowrdInput />
             </from>
 
             <div className={styles.abc}>
