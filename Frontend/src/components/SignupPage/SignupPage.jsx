@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import '../ProfilePage/ProfilePage.css'; // Create a CSS file for styling
+//import '../ProfilePage/ProfilePage.css'; // Create a CSS file for styling
 // import './SignupPage.css';
 // import avatar from '../Assets/profile.png';
+import styles from './SignupPage.module.css';
 import { Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '../Button/Button';
+import NavBar from '../NavBar/NavBar';
 
 
 const SignupPage = ({ onCreate }) => {
@@ -39,7 +41,7 @@ const handleCreateClick = async (e) => {
                 });
             });
     
-            navigate('/Login');
+            navigate('/SignupPage');
            
         } catch (error) {
             console.log(error);
@@ -51,63 +53,54 @@ const handleCreateClick = async (e) => {
 
     return (
         <>
-        <div className='profile-page'>
-            <div className="profile-container">
-                <div className="profile-box">
-                    <div className='heading'>SignUp</div>
-                  
-                    <div className="profile-form">
-                    <form>
-                       
-                        <div className="input-group">
-                            <input
-                                type="text"
-                                placeholder="First Name"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Last Name"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                        </div>
-                       
-                        <input
-                            type="tel"
-                            placeholder="Phone Number"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                        />
-                        <br />
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <br />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <br />
-                        
-                        <Button text= "SignUp"/>
-                        
-                        </form>
-                        
-                        <span className='profile-logout-text' style={{ color: '#808080' }}>Already Register&nbsp;
-                        <span style={{ color: 'red' }}><Link to="/Login" style={{ textDecoration: 'none', color: 'inherit' }}>LogIn Now</Link></span></span>
-                    </div>
+        <NavBar />
+        <section className={`${styles.SignUp_page} `}>
+        <div className={`${styles.SignUp_page_img} `}>
+            <img src='/images/login-img.png'></img>
+        </div>
+
+        <div className={`${styles.SignUp_page_form} `}>
+            <div>
+                <h1 className={`${styles.SignUp_page_heading} `}>Create an Account</h1>
+                <h1 className={`${styles.SignUp_page_heading} `}></h1>
+            </div>
+
+            <form>
+            <div className={styles.name}>
+                <div className={`${styles.SignUp_form} `}>
+                    <label>First Name</label>
+                    <input type="text" placeholder="First name" onChange={(e) => setFirstName(e.target.value)} />
+                </div>
+                <div className={`${styles.SignUp_form} `}>
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Last name" onChange={(e) => setLastName(e.target.value)} />
                 </div>
             </div>
-          
+
+            <div className={`${styles.SignUp_form} `}>
+                <label>Phone</label>
+                <input type="text" placeholder="Phone number" onChange={(e) => setPhone(e.target.value)} /> 
+            </div>
+
+            <div className={`${styles.SignUp_form} `}>  
+                <label>Email</label>
+                <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />   
+            </div>
+
+            <div className={`${styles.SignUp_form} `}>
+                <label>Password</label>
+                <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            </form>
+
+            <Button text="Sign Up" onClick={handleCreateClick}/>
+
+            <div className={`${styles.SignUp_page_login} `}>
+                <p>Already have an account? <Link to="/Login">Login</Link></p>
+            </div>
         </div>
         <ToastContainer />
+        </section>
         </>
     );
 };

@@ -10,9 +10,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../NavBar/NavBar';
 import Button from '../Button/Button';
+import PasswordInput from '../PasswordInput/PasswordInput';
 
 
-const LoginPage = ({ onCreate }) => {
+const SignupPage = ({ onCreate }) => {
    
     const [email, setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -60,13 +61,14 @@ const handleLoginClick = async (e) => {
             <from>
                 <div className={`${styles.login_form} `}>
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
 
-                <div className={`${styles.login_form} `}>
+                {/* <div className={`${styles.login_form} `}>
                     <label htmlFor="email">Paassword</label>
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </div>
+                </div> */}
+                <PasswordInput />
             </from>
 
             <Button text="Login"/>
@@ -97,5 +99,5 @@ const handleLoginClick = async (e) => {
    
    
 
-export default LoginPage;
+export default SignupPage;
 
