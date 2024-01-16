@@ -72,6 +72,8 @@ const handleLoginClick = async (e) => {
                <PasswordInput />
             </form>
 
+            <Button btnClick={handleLoginClick}  text="Login"/>
+           
             <div className={styles.abc}>
                 <div className={`${styles.login_page_remember_me} `}>
                     <input type="checkbox" id="remember_me" />
