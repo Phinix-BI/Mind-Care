@@ -69,7 +69,7 @@ const handleLoginClick = async (e) => {
                     <label htmlFor="email">Paassword</label>
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div> */}
-               <PassowrdInput />
+               <PasswordInput />
             </form>
 
             <div className={styles.abc}>
