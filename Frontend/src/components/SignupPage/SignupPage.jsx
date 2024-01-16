@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '../Button/Button';
 import NavBar from '../NavBar/NavBar';
+import PasswordInput from '../PasswordInput/PasswordInput';
 
 
 const SignupPage = ({ onCreate }) => {
@@ -87,10 +88,7 @@ const handleCreateClick = async (e) => {
                 <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />   
             </div>
 
-            <div className={`${styles.SignUp_form} `}>
-                <label>Password</label>
-                <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-            </div>
+            <PasswordInput password={password} setPassword={setPassword}/>
             </form>
 
             <Button text="Sign Up" onClick={handleCreateClick}/>
