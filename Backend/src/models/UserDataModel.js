@@ -38,6 +38,12 @@ const userSchema = new mongoose.Schema({
     token: {
         type: String,
     },
+    otp: {
+        type: Number,
+    },
+    otpExpire: {
+        type: Date,
+    },
 });
 
 const User = mongoose.model('User', userSchema);

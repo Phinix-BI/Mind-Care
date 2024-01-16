@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './LoginPage.module.css';
+import styles1 from '../Button/Button.module.css';
 // import '../ProfilePage/ProfilePage.css'; // Create a CSS file for styling
 // import './SignupPage.css';
 // import avatar from '../Assets/profile.png';
@@ -18,7 +19,7 @@ const SignupPage = ({ onCreate }) => {
     const [email, setEmail] = useState('');
     const [password,setPassword] = useState('');
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     
 const handleLoginClick = async (e) => {
         e.preventDefault();
@@ -29,7 +30,7 @@ const handleLoginClick = async (e) => {
             
             localStorage.setItem('token', response.data.token);
            
-            window.location = '/ProfilePage';
+            // window.location = '/ProfilePage';
               toast(response.data.message, {
                     position: "top-right",
                     autoClose: 2000,
@@ -58,7 +59,7 @@ const handleLoginClick = async (e) => {
         <div className={`${styles.login_page_form} `}>
             <h1 className={`${styles.login_page_heading} `}>Welcome Back,</h1>
             <h1 className={`${styles.login_page_heading} `}>Howard</h1>
-            <from>
+            <form>
                 <div className={`${styles.login_form} `}>
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
@@ -67,11 +68,9 @@ const handleLoginClick = async (e) => {
                 {/* <div className={`${styles.login_form} `}>
                     <label htmlFor="email">Paassword</label>
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </div> */}
-                <PasswordInput />
+                </div>
             </from>
 
-            <Button text="Login"/>
             <div className={styles.abc}>
                 <div className={`${styles.login_page_remember_me} `}>
                     <input type="checkbox" id="remember_me" />
