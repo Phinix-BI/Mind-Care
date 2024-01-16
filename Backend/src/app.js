@@ -52,6 +52,8 @@ app.post('/user/login',UserLoginRoute);
 
 app.post('/user/forgot-password',UserLoginRoute);
 
+// user reset password routes
+app.post('/user/reset-password',UserLoginRoute);
 
 
 app.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server

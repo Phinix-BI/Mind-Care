@@ -91,7 +91,7 @@ const handleCreateClick = async (e) => {
             <PasswordInput password={password} setPassword={setPassword}/>
             </form>
 
-            <Button text="Sign Up" onClick={handleCreateClick}/>
+            <Button text="Sign Up" btnClick={handleCreateClick}/>
 
             <div className={`${styles.SignUp_page_login} `}>
                 <p>Already have an account? <Link to="/Login">Login</Link></p>

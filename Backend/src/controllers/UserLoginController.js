@@ -91,5 +91,42 @@ export const forgotPassword = async (req, res) => {
 }
 
 export const resetPassword = async (req, res) => {
+    
+    const {otp, password , confirmPassword} = req.body;
+
+    if(!otp || !password || !confirmPassword){
+        res.status(400).send('All fields are required');
+    }
+
+    if(password !== confirmPassword){
+        res.status(400).send('Password does not match');
+    }
+
+    try{
+        const findUser = await UserDataModel.findOne({ otp: otp });
+
+        if(!findUser){
+            res.status(403).send('Invalid OTP');    
+        }
+
+        if(findUser.otpExpire < new Date()){
+            res.status(403).send('OTP expired');    
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const response = await UserDataModel.updateOne({email: findUser.email}, {password: hashedPassword, otp: null, otpExpire: null});
+
+        res.status(200).send(`Password reset successfully`);
+
+
+    }catch(error){
+        res.status(404).json({ message: error.message });
+    }
+
+
     console.log("reset password");
 }
+
+
