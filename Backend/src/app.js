@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import UserDataRoute from './routes/UserDataRoute.js'; // Import UserDataRoute.js functions
 import UserLoginRoute from './routes/UserLoginRoute.js'; // Import UserLoginRoute.js functions
-
+import  userLocationRouter  from "./routes/userLocationRouter.js";
 
 import 'dotenv/config'// Import dotenv package to load environment variables
 
@@ -52,8 +52,13 @@ app.post('/user/login',UserLoginRoute);
 
 app.post('/user/forgot-password',UserLoginRoute);
 
+<<<<<<< HEAD
 // user reset password routes
 app.post('/user/reset-password',UserLoginRoute);
 
+=======
+// user location 
+app.post("/location", userLocationRouter )
+>>>>>>> refs/remotes/origin/main
 
 app.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server
