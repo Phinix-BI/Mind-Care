@@ -4,12 +4,15 @@
     height: 72px;
     padding: 0 8px;
     align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
 }
   
 .navbar ul {
     display: flex;
     list-style: none;
-    gap: 24px;
+    gap: 30px;
+    font-size: 18px;
     font-weight: 500px;
 }
 

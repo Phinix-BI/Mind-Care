@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.container img {
+    width: 100%;
+}
+.text {
+    width: 100%;
+    padding-right: 100px;
+}
+.text p {
+    font-size: 20px;
+    font-weight: 500px;
+    margin: 10px 0;
+    color: rgb(135, 135, 135);
+}
+.text h1 {
+    font-size: 62px;
+    font-weight: 800px;
+    margin: 10px 0 30px;
+}
+.img {
+    width: 100%;
+}

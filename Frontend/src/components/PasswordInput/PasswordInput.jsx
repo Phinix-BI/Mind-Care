@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './PasswordInput.module.css';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaLock, FaLockOpen } from "react-icons/fa";
+
 
 const PasswordInput = ({password, setPassword}) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +21,7 @@ const PasswordInput = ({password, setPassword}) => {
           placeholder="Password"
         />
         <span className={styles['toggle-password']} onClick={handleTogglePassword}>
-          {showPassword ? <FaEyeSlash /> : <FaEye />}
+          {showPassword ? <FaLockOpen /> : <FaLock />}
         </span>
       </div>
     </div>

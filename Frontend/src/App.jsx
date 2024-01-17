@@ -6,11 +6,12 @@ import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import ProfilePage from "./components/ProfilePage/ProfilePage"
 import SignupPage from "./components/SignupPage/SignupPage"
 import LoginPage from "./components/LoginPage/LoginPage"
+import HomePage from "./components/HomePage/HomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1>Home Page</h1>,
+    element: <HomePage />,
   },
   {
     path: "/ProfilePage",
