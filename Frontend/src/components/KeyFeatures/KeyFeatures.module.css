@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: rgb(89, 89, 89);
+    color: white;
+    text-align: center;
+}
+.container ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    max-width: 1200px;
+}
+.container li {
+    text-align: center;
+    list-style-type: none;
+}
+
+.icon {
+    color: royalblue;
+    font-size: 45px;
+    align-items: center;
+    justify-content: center;
+}
+.Points {
+    width: 30%;
+    text-align: center;
+}
