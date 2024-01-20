@@ -52,13 +52,13 @@ app.post('/user/login',UserLoginRoute);
 
 app.post('/user/forgot-password',UserLoginRoute);
 
-
+<<<<<<< HEAD
 // user reset password routes
 app.post('/user/reset-password',UserLoginRoute);
 
-
+=======
 // user location 
 app.post("/location", userLocationRouter )
-
+>>>>>>> refs/remotes/origin/main
 
 app.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server

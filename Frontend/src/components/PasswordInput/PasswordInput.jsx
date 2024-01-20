@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './PasswordInput.module.css';
-import { FaLock, FaLockOpen } from "react-icons/fa";
+import { FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const PasswordInput = ({password, setPassword}) => {
@@ -12,8 +12,7 @@ const PasswordInput = ({password, setPassword}) => {
 
   return (
     <div className={styles.pass}>
-      <label htmlFor="password">Password</label>
-      <div className={styles.passwordContainer}>
+        <i><FaLock /></i>
         <input
           type={showPassword ? 'text' : 'password'}
           value={password}
@@ -21,9 +20,8 @@ const PasswordInput = ({password, setPassword}) => {
           placeholder="Password"
         />
         <span className={styles['toggle-password']} onClick={handleTogglePassword}>
-          {showPassword ? <FaLockOpen /> : <FaLock />}
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
-      </div>
     </div>
   );
 };

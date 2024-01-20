@@ -53,7 +53,7 @@ const handleLoginClick = async (e) => {
 
     return (
         <>
-        <NavBar />
+        {/* <NavBar /> */}
         <section className={`${styles.login_page} `}>
         
         <div className={`${styles.login_page_form} `}>
@@ -85,7 +85,7 @@ const handleLoginClick = async (e) => {
             </div>
         </div>
         <div className={`${styles.login_page_img} `}>
-            <img src="public\images\5861790.webp" alt="login" />
+            <img src="/images/5861790.webp" alt="login" />
         </div>
 
         <ToastContainer />
