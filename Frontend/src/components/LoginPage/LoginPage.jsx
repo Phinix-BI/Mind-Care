@@ -53,7 +53,7 @@ const handleLoginClick = async (e) => {
 
     return (
         <>
-        <NavBar />
+        {/* <NavBar /> */}
         <section className={`${styles.login_page} `}>
         
         <div className={`${styles.login_page_form} `}>

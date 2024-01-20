@@ -7,7 +7,7 @@ import { KeyFeatures } from '../KeyFeatures/KeyFeatures'
 const HomePage = () => {
   return (
    <section className={Styles.home}>
-    <NavBar />
+    {/* <NavBar /> */}
     <div className={Styles.container}>
         <div className={Styles.text}>
             <p>Mental Health Is Wealth</p>
