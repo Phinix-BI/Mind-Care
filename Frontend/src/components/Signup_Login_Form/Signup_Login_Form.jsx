@@ -22,9 +22,9 @@ const Signup_Login_Form = () => {
         fullName, email, password,role
       });
 
-      toast(response.data.message, {
+       toast(response.data.message, {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1200,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -32,6 +32,9 @@ const Signup_Login_Form = () => {
         progress: undefined,
         theme: "light",
       });
+      setTimeout(() => {
+      setIsSignUpMode(false);
+      }, 1200);
     } catch (error) {
       console.error(error);
       toast.error('An error occurred while updating profile.');
@@ -49,7 +52,7 @@ const Signup_Login_Form = () => {
 
       toast(response.data.message, {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1200,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -69,10 +72,15 @@ const Signup_Login_Form = () => {
 
   const handleSignUpClick = () => {
     setIsSignUpMode(true);
+    setEmail('');
+    setPassword('');
+    setFullName('');
+
   };
 
   const handleSignInClick = () => {
     setIsSignUpMode(false);
+    
   };
 
   return (
@@ -117,8 +125,9 @@ const Signup_Login_Form = () => {
             <PasswordInput password={password} setPassword={setPassword} />
             <input type="submit" className="btn1" value="Sign up" onClick={handleRegisterClick} />
           </form>
-          <ToastContainer />
+          
         </div>
+        <ToastContainer />
       </div>
 
       <div className="panels-container">
