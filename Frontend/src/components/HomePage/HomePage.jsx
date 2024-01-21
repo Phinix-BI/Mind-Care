@@ -1,5 +1,4 @@
 import React from 'react'
-import NavBar from '../NavBar/NavBar'
 import Button from '../Button/Button'
 import Styles from './HomePage.module.css'
 import Footer from '../common/Footer/Footer'
@@ -7,7 +6,6 @@ import { KeyFeatures } from '../KeyFeatures/KeyFeatures'
 const HomePage = () => {
   return (
    <section className={Styles.home}>
-    {/* <NavBar /> */}
     <div className={Styles.container}>
         <div className={Styles.text}>
             <p>Mental Health Is Wealth</p>

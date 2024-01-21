@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './Signup_Login_Form.css';
 import PasswordInput from '../PasswordInput/PasswordInput';
+import IconComponent from '../IconComponent/IconComponent';
 import { FaUser } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
+
 
 const Signup_Login_Form = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -16,14 +18,13 @@ const Signup_Login_Form = () => {
   };
 
   return (
-    <div className={`container ${isSignUpMode ? 'sign-up-mode' : ''}`}>
+   
+    <div className={`form-main-container ${isSignUpMode ? 'sign-up-mode' : ''}`}>
       <div className="forms-container">
         <div className="signin-signup">
           {/* Sign In Form */}
           <form action="#" className="sign-in-form">
-          {/* <div className="logo"> <img src="images/trial3.png" alt="logo" /> </div> */}
-            /<h2 className="title">Sign in</h2>
-            {/* <div className="logo1"> <img src="images/trial.png" width={350} alt="logo" /> </div> */}
+            <h2 className="title">Sign in</h2>
             <div className="input-field">
               <i><IoMail /></i>
               <input type="text" placeholder="E-mail" />
@@ -50,13 +51,14 @@ const Signup_Login_Form = () => {
               </div>
             </div>
 
-            <input type="submit" value="Login" className="btn solid" />
+            <input type="submit" value="Login" className="btn1 solid" />
 
           </form>
 
           {/* Sign Up Form */}
           <form action="#" className="sign-up-form">
             <h2 className="title">Sign up</h2>
+            <IconComponent />
             <div className="input-field">
               <i><FaUser /></i>
               <input type="text" placeholder="Username" />
@@ -66,15 +68,15 @@ const Signup_Login_Form = () => {
               <input type="email" placeholder="Email" />
             </div>
             <PasswordInput />
-            <input type="submit" className="btn" value="Sign up" />
+            <input type="submit" className="btn1" value="Sign up" />
           </form>
 
           {/* Buttons to toggle between Sign In and Sign Up */}
           {/* <div className="buttons-container">
-            <button className="btn transparent" onClick={handleSignInClick}>
+            <button className="btn1 transparent" onClick={handleSignInClick}>
               Sign in
             </button>
-            <button className="btn transparent" onClick={handleSignUpClick}>
+            <button className="btn1 transparent" onClick={handleSignUpClick}>
               Sign up
             </button>
           </div> */}
@@ -92,7 +94,7 @@ const Signup_Login_Form = () => {
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
               ex ratione. Aliquid!
             </p>
-            <button className="btn transparent" onClick={handleSignUpClick}>
+            <button className="btn1 transparent" onClick={handleSignUpClick}>
               Sign up
             </button>
           </div>
@@ -107,7 +109,7 @@ const Signup_Login_Form = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
               laboriosam ad deleniti.
             </p>
-            <button className="btn transparent" onClick={handleSignInClick}>
+            <button className="btn1 transparent" onClick={handleSignInClick}>
               Sign in
             </button>
           </div>
@@ -116,6 +118,7 @@ const Signup_Login_Form = () => {
       </div>
       </div>
       </div>
+    
   );
 };
 

@@ -1,0 +1,23 @@
+.container2 {
+    display: flex;
+}
+.container2 div {
+    display: flex;
+    margin: 5px 35px;
+    padding: 5px;
+    align-items: center;
+    border-bottom: 2px solid #5cc7bf;
+}
+
+.container2 div i {
+    font-size: 20px;
+    margin-right: 10px;
+    padding: 0;
+}
+
+.container2 p {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 0 0 10px;
+}
+
