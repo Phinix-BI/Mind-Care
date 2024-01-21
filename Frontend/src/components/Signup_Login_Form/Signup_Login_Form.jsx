@@ -21,7 +21,9 @@ const Signup_Login_Form = () => {
         <div className="signin-signup">
           {/* Sign In Form */}
           <form action="#" className="sign-in-form">
-            <h2 className="title">Sign in</h2>
+          {/* <div className="logo"> <img src="images/trial3.png" alt="logo" /> </div> */}
+            /<h2 className="title">Sign in</h2>
+            {/* <div className="logo1"> <img src="images/trial.png" width={350} alt="logo" /> </div> */}
             <div className="input-field">
               <i><IoMail /></i>
               <input type="text" placeholder="E-mail" />
