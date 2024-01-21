@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './Signup_Login_Form.css';
 import PasswordInput from '../PasswordInput/PasswordInput';
+import IconComponent from '../IconComponent/IconComponent';
 import { FaUser } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
+
 
 const Signup_Login_Form = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -22,6 +24,7 @@ const Signup_Login_Form = () => {
           {/* Sign In Form */}
           <form action="#" className="sign-in-form">
             <h2 className="title">Sign in</h2>
+            <IconComponent />
             <div className="input-field">
               <i><IoMail /></i>
               <input type="text" placeholder="E-mail" />
@@ -55,6 +58,7 @@ const Signup_Login_Form = () => {
           {/* Sign Up Form */}
           <form action="#" className="sign-up-form">
             <h2 className="title">Sign up</h2>
+            <IconComponent />
             <div className="input-field">
               <i><FaUser /></i>
               <input type="text" placeholder="Username" />
