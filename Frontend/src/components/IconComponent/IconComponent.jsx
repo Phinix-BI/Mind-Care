@@ -2,26 +2,30 @@ import React, { useState } from 'react';
 import Styles from './IconComponent.module.css';
 import { FaUserDoctor, FaUser } from "react-icons/fa6";
 
-function IconComponent() {
+const IconComponent= ({role,setRole})=> {
   const [color, setColor] = useState('grey');
   const [color2, setColor2] = useState('#5cc7bf');
-
-  let vari = "Patient"
+  
+  let userType = "Patient"
 
   const colorChnage = () => {
     
     setColor("#5cc7bf")
     setColor2("grey")
-    vari = "Doctor"
-    console.log(vari)
+    userType = "Doctor"
+    console.log(userType)
+    setRole(userType)
   }
 
   const colorChnage2 = () => {
     setColor2("#5cc7bf")
     setColor("grey") 
-    vari = "Patient"
-    console.log(vari)
+    userType = "Patient"
+    console.log(userType);
+    setRole(userType)
   }
+
+
   return (
     <div className={Styles.container2}>
 

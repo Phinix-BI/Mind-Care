@@ -19,14 +19,15 @@ export const getUserData = async (req, res) => {
 };
 
 export const PostUserData = async (req, res) => {
-    const {firstName} = req.body;
-    const {lastName} = req.body;
-    const {phone} = req.body;
+    const {fullName} = req.body;
+    const {role} = req.body;
+    const firstName = fullName.split(" ")[0];
+    const lastName = fullName.split(" ")[1];
     const {email} = req.body;
     const {password} = req.body;
 
  
-
+    // console.log(role);
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -36,20 +37,18 @@ export const PostUserData = async (req, res) => {
         lastName: lastName,
         password: hashedPassword,
         email: email,
-        phone : phone,
+        role: role,
     } 
     console.log(userData);
 
-    
-  
 
     try {
     const findEmail = await UserDataModel.findOne({ email: userData.email });
-    const findPhone = await UserDataModel.findOne({ phone: userData.phone });
+    // const findPhone = await UserDataModel.findOne({ phone: userData.phone });
 
-    if (findPhone) {
-        return res.status(400).json({ message: "Phone already exists" });
-    }
+    // if (findPhone) {
+    //     return res.status(400).json({ message: "Phone already exists" });
+    // }
 
 
     if (findEmail) {
@@ -61,7 +60,7 @@ export const PostUserData = async (req, res) => {
     await newUserData.save();
         res.status(201).json({message: "Profile Created Succesfully", newUserData});
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        res.status(409).json({ message: error.message + "Error in creating profile" });
     }
 }
 
@@ -70,7 +69,10 @@ export const UpdateUserData = async (req, res) => {
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
         const userId = decoded.id;
     
-        const { firstName, lastName, phone, email, age, gender } = req.body;
+        const { fullName, phone, email, age, gender } = req.body;
+        
+        const firstName = fullName.split(" ")[0];
+        const lastName = fullName.split(" ")[1];
         const userData = {
             firstName,
             lastName,
