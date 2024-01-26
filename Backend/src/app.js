@@ -56,6 +56,8 @@ app.post('/user/forgot-password',UserLoginRoute);
 // user reset password routes
 app.post('/user/reset-password',UserLoginRoute);
 
+// user verify otp routes
+app.post('/user/verify-otp',UserLoginRoute);
 
 // user location 
 app.post("/location", userLocationRouter );
