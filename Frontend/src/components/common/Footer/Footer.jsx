@@ -1,53 +1,50 @@
-import React from 'react'
-import Styles from './Footer.module.css'
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
 
-const Footer = () => {
+'use client';
+import { Footer } from 'flowbite-react';
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
+
+function Component() {
   return (
-    <div className={Styles.footer}>
-        <div className={Styles.Social}>
-            <h1>MindCare.</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <br />
-            <div className={Styles.link}>
-                <div className={Styles.SocialIcon}>
-                    <FaFacebook />
-                </div>
-                <div className={Styles.SocialIcon}>
-                    <FaInstagram />
-                </div>
-                <div className={Styles.SocialIcon}>
-                    <FaTwitter  />
-                </div>
-                <div className={Styles.SocialIcon}>
-                    <FaLinkedin />
-                </div>
-            </div>
+    <Footer className='bg-white'>
+        <div className="grid w-full grid-cols-2 gap-8 px-6 py-8 md:grid-cols-4">
+          <div>
+            <Footer.Title title="MindCare." className='font-extrabold text-xl'/>
+            <Footer.LinkGroup col className='text-lg'>
+              <Footer.Link href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit, Lorem ipsum dolor sit amet.</Footer.Link>
+            </Footer.LinkGroup>
+          </div>
 
-            <br />
-            <br />
-            <p>Lorem ipsum dolor sit amet.</p>
-        </div>
+          <div>
+            <Footer.Title title="Quick Links" className='font-extrabold text-xl'/>
+            <Footer.LinkGroup col className='text-lg'>
+              <Footer.Link href="#">Home</Footer.Link>
+              <Footer.Link href="#">About</Footer.Link>
+              <Footer.Link href="#">Service</Footer.Link>
+              <Footer.Link href="#">Contacts</Footer.Link>
+            </Footer.LinkGroup>
+          </div>
 
-        <div className={Styles.QuickLinks}>
-            <h1>Quick Links</h1>
-            <p>Home</p>
-            <p>Service</p>
-            <p>About</p>
-            <p>Contact</p>
-        </div>
+          <div>
+            <Footer.Title title="Address" className='font-extrabold text-xl'/>
+            <Footer.LinkGroup col className='text-lg'>
+              <Footer.Link href="#">123, Lorem ipsum dolor sit amet consectetur adipisicing elit.</Footer.Link>
+              <Footer.Link href="#">Phone: +91 1234567890</Footer.Link>
+              <Footer.Link href="#">Email: mindcare@gmail.com</Footer.Link>
+            </Footer.LinkGroup>
+          </div>
 
-        <div className={Styles.address}>
-            <h1>Address</h1>
-            <p>123, Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-            <p>Phone: +91 1234567890</p>
-            <p>Email: mindcare@gmail.com</p>
+          <div>
+            <Footer.Title title="Social" className='font-extrabold text-xl'/>
+            <Footer.LinkGroup col className='text-lg flex-row gap-5'>
+              <Footer.Link href="#"><FaFacebook /></Footer.Link>
+              <Footer.Link href="#"><FaInstagram/></Footer.Link>
+              <Footer.Link href="#"><FaTwitter  /></Footer.Link>
+              <Footer.Link href="#"><FaLinkedin /></Footer.Link>
+            </Footer.LinkGroup>
+          </div>
         </div>
-    </div>
-  )
+    </Footer>
+  );
 }
 
-export default Footer;
+export default Component;

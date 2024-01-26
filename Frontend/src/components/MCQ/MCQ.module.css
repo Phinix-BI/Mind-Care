@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.questions h1 {
+    font-size: 4em;
+    line-height: 1.1;
+}
+
+.questions h2 {
+    font-size: 2.2em;
+    font-weight: 500;
+}
+
+.questions {
+    margin: 30px;
+}
+
+.options{
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    margin: 5px;
+    cursor: pointer;
+    margin: 30px 80px;
+    justify-content: center;
+}
+
+.options button {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Prevbtn,
+.Nxtbtn {
+    background-color: #687cfc;
+    border: none;
+    padding: 15px 52px;
+    font-size: 16px;
+    margin: 35px auto;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+@media only screen and (max-width: 600px) {
+    h1 {
+        font-weight: 400;
+        font-size: smaller;
+    }
+}
