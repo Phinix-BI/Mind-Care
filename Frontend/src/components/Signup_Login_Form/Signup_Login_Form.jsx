@@ -7,8 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import IconComponent from '../IconComponent/IconComponent';
 import './Signup_Login_Form.css';
-import { Player } from '@lottiefiles/react-lottie-player';
-import settingGif from '../Assets/Setting.gif';
 
 
 const Signup_Login_Form = () => {
