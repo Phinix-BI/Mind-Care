@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { IoMail } from "react-icons/io5";
-import { FaUser,FaKey } from "react-icons/fa";
+import { FaUser,FaKey} from "react-icons/fa";
+import { GrMail } from "react-icons/gr";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -245,7 +245,7 @@ const Signup_Login_Form = () => {
             { isForgotPassMode && !isEmailverified && !isOtpverified? (
             <>
             <div className="input-field">
-              <i><IoMail /></i>
+              <i><GrMail /></i>
               <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               {loader ? (
@@ -293,7 +293,7 @@ const Signup_Login_Form = () => {
               <input type="text" placeholder="Username" value={fullName} onChange={(e) => setFullName(e.target.value)} />
             </div>
             <div className="input-field">
-              <i><IoMail /></i>
+              <i><GrMail /></i>
               <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <PasswordInput password={password} setPassword={setPassword} />

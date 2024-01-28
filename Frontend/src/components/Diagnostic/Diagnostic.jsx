@@ -10,7 +10,7 @@ const Diagnostic = () => {
       
       <NavBar />
       <HeroSection />
-      <div className='max-w-screen-xl mx-auto'>
+      <div className='bg-white max-w-screen-xl mx-auto'>
 
       {/* Our Expertise */}
       <div className='flex justify-center'>

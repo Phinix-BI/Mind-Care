@@ -1,18 +1,24 @@
 import React from 'react'
-import Component from '../common/Footer/Footer'
+import Footer from '../common/Footer/Footer'
 import Navbar from '../common/Navbar/Navbar'
 import HeroSection from '../HeroSection/HeroSection'
 import CTA from '../CTA/CTA'
+import Testimonial from '../Testinomials/Testimonial'
+import Features from "../Features/Features"
 // import NavBar from '../common/NavBar/NavBar'
 const HomePage = () => {
   return (
    <>
-   <Navbar />
+    <Navbar />
     <HeroSection />
     <CTA />
+    <Features />
     <CTA />
-    {/* <Component /> */}
-    <Component />
+    
+    <Testimonial />
+
+    <Footer />
+   
    </>
   )
 }
