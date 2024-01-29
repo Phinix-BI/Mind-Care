@@ -65,7 +65,7 @@ app.post('/user/verify-otp',UserLoginRoute);
 app.post("/location", userLocationRouter );
 
 //user assessment 
-app.use('/api', userAssessmentRouter)
+
 
 app.post('/user/userAssessment/save',userAssessmentRouter)
 

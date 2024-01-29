@@ -25,25 +25,34 @@ export const getuserResponse = async (req, res) => {
 //POST
 export const saveUserResponse = async (req,res) => {
    
-    const {response} = req.body;
+    // const {response} = req.body;
+    const {userText} = req.body;
 
-   
+    const {questionNo} = req.body;
+
+    const similarQuestion = await Question.find({QuestionNo:questionNo});
+
+    const backendOptions = similarQuestion[0].options.map(option => option.text);
     
     function findClosestMatch(userText, backendOptions) {
-        const ratings = backendOptions.map(option => stringSimilarity.compareTwoStrings(userText, option));
+        const ratings = backendOptions.map((option) =>
+            stringSimilarity.compareTwoStrings(userText, option)
+        );
         const bestMatchIndex = ratings.indexOf(Math.max(...ratings));
-        return bestMatchIndex + 1; // Adjust to your specific numbering scheme
-      }
+        return res.json({ bestMatchIndex: bestMatchIndex + 1, match: true }); // Adjust to your specific numbering scheme
+    }
+
+    findClosestMatch(userText, backendOptions);
     
 
-    try{
-       const savedData = await UserResponse.insertMany(response);
-        console.log("Data saved successfully", savedData);
-        res.status(201).json({msg :"Success"});
-    } 
-    catch(error){
-        res.status(404).json({ message: error.message })
-    }
+    // try{
+    //    const savedData = await UserResponse.insertMany(response);
+    //     console.log("Data saved successfully", savedData);
+    //     res.status(201).json({msg :"Success"});
+    // } 
+    // catch(error){
+    //     res.status(404).json({ message: error.message })
+    // }
     // res.json({msg:"OK"})
 }
 

@@ -9,6 +9,7 @@ const MCQ = () => {
     
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [matching, setMatching] = useState(false);
+    const[matchIndex, setMatchIndex] = useState(-1);
 
     const handleNext = () => {
         if (currentQuestion < Diagnose_Question.length - 1) {
@@ -46,37 +47,26 @@ const MCQ = () => {
             const spokenText = event.results[last][0].transcript.trim().toLowerCase();
 
 
-            const response = await axios.post("http://localhost:3000/api/questions",{spokenText})
+            const response = await axios.post("http://localhost:3000/api/user/userAssessment/save",{spokenText})
            
             console.log(response.data);
-            // Find the corresponding radio button and select it
-            const inputElements = document.querySelectorAll('input[type="radio"]');
-            let matched = false;
-            
-            
-            inputElements.forEach(input => {
-              if (input.value.toLowerCase() === response.data.toLowerCase()) {
-                input.checked = true;
-                matched = true;
-              }
-            });
+            setMatchIndex(response.data.bestMatchIndex);
+            let matched = response.data.match;
             
             if (matched) {
-              displayFeedback(feedbackContainer, 'Voice input recognized successfully.');
+              // displayFeedback(feedbackContainer, 'Voice input recognized successfully.');
               recognition.stop()
               isRecognitionProcessing = true;
-            } else if(!matched) {
-              displayFeedback(feedbackContainer, 'Sorry, voice input not matched. Please try again.');
+            } else{
+              // displayFeedback(feedbackContainer, 'Sorry, voice input not matched. Please try again.');
               isRecognitionProcessing = false;
             }
-  
-          console.log(userText)
           
           };
           
-          recognition.onend = await function () {
+          recognition.onend = async function () {
             // Set the flag to false when recognition ends
-            
+             
             // Restart recognition only if not currently processing a result
             if (!isRecognitionProcessing) {
               recognition.start();
@@ -88,14 +78,13 @@ const MCQ = () => {
         } 
         else {
           console.error('Speech recognition not supported in this browser.');
-          displayFeedback(feedbackContainer, 'Speech recognition not supported in this browser.');
         }
       }
 
 
-      const handleMatching = (e) => {
+      // const handleMatching = (e) => {
 
-      }
+      // }
 
     const currentQuestionData = Diagnose_Question[currentQuestion];
 
@@ -136,13 +125,14 @@ const MCQ = () => {
 
             {currentQuestionData.options.map((option, optionIndex) => (
               <div key={optionIndex} className={Styles.options}>
-                {/* <button>
-                  <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label>
-                </button> */}
-
-                <button type="button" className="text-purple-700 hover:text-black border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+               
+              {(matchIndex === optionIndex) ? (
+                  <button type="button" className="text-purple-700 hover:text-black border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 active">
+                    <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label></button>
+            ):( <button type="button" className="text-purple-700 hover:text-black border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                     <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label>
-                </button>
+                </button>)}
+               
               </div>
             ))}
           </div>
