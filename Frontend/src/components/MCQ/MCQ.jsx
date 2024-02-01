@@ -29,7 +29,7 @@ const MCQ = () => {
       
 
       
-      const enableVoiceRecognition = async(feedbackContainer) => {
+      // const enableVoiceRecognition = async() => {
        
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         
@@ -45,9 +45,9 @@ const MCQ = () => {
             
             const last = event.results.length - 1;
             const spokenText = event.results[last][0].transcript.trim().toLowerCase();
+            console.log(spokenText);
 
-
-            const response = await axios.post("http://localhost:3000/api/user/userAssessment/save",{spokenText})
+            const response = await axios.post("http://localhost:3000/api/user/userAssessment/save",{spokenText,currentQuestion})
            
             console.log(response.data);
             setMatchIndex(response.data.bestMatchIndex);
@@ -79,8 +79,9 @@ const MCQ = () => {
         else {
           console.error('Speech recognition not supported in this browser.');
         }
-      }
+      
 
+      // enableVoiceRecognition();
 
       // const handleMatching = (e) => {
 
@@ -114,8 +115,8 @@ const MCQ = () => {
             </div>
         </div>
 
-        <div class="bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700 mx-auto w-3/12">
-          <div class="bg-indigo-600 h-2.5 rounded-full dark:bg-indigo-500" style={{width:`${(currentQuestion / (Diagnose_Question.length - 1)) * 100}%`}}></div>
+        <div className="bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700 mx-auto w-3/12">
+          <div className="bg-indigo-600 h-2.5 rounded-full dark:bg-indigo-500" style={{width:`${(currentQuestion / (Diagnose_Question.length - 1)) * 100}%`}}></div>
         </div>
        
         <div>
@@ -156,6 +157,6 @@ const MCQ = () => {
         </div>
 
   )
-}
+              }
 
 export default MCQ;

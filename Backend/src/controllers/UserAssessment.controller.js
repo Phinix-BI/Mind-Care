@@ -26,23 +26,25 @@ export const getuserResponse = async (req, res) => {
 export const saveUserResponse = async (req,res) => {
    
     // const {response} = req.body;
-    const {userText} = req.body;
+    const {spokenText} = req.body;
+    console.log("userText",spokenText);
+    const {currentQuestion} = req.body;
+    console.log("questionNo",currentQuestion);
 
-    const {questionNo} = req.body;
+    res.json({msg:"OK"})
+    // const similarQuestion = await Question.find({QuestionNo:currentQuestion});
 
-    const similarQuestion = await Question.find({QuestionNo:questionNo});
-
-    const backendOptions = similarQuestion[0].options.map(option => option.text);
+    // const backendOptions = similarQuestion[0].options.map(option => option.text);
     
-    function findClosestMatch(userText, backendOptions) {
-        const ratings = backendOptions.map((option) =>
-            stringSimilarity.compareTwoStrings(userText, option)
-        );
-        const bestMatchIndex = ratings.indexOf(Math.max(...ratings));
-        return res.json({ bestMatchIndex: bestMatchIndex + 1, match: true }); // Adjust to your specific numbering scheme
-    }
+    // function findClosestMatch(userText, backendOptions) {
+    //     const ratings = backendOptions.map((option) =>
+    //         stringSimilarity.compareTwoStrings(userText, option)
+    //     );
+    //     const bestMatchIndex = ratings.indexOf(Math.max(...ratings));
+    //     return res.json({ bestMatchIndex: bestMatchIndex + 1, match: true }); // Adjust to your specific numbering scheme
+    // }
 
-    findClosestMatch(userText, backendOptions);
+    // findClosestMatch(spokenText, backendOptions);
     
 
     // try{

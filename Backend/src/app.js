@@ -24,7 +24,7 @@ app.use( bodyParser.urlencoded({extended: true}));
 
 app.use('/api', UserDataRoute); // Use UserDataRoute.js for all routes starting with /api
 app.use('/api', UserLoginRoute);
-
+app.use('/api', userAssessmentRouter);
 
 app.use(cors());
 
@@ -65,8 +65,7 @@ app.post('/user/verify-otp',UserLoginRoute);
 app.post("/location", userLocationRouter );
 
 //user assessment 
-
-
+  
 app.post('/user/userAssessment/save',userAssessmentRouter)
 
 app.get("/user/userAssessment/question",userAssessmentRouter )
