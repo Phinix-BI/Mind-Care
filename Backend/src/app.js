@@ -7,6 +7,7 @@ import UserLoginRoute from './routes/UserLoginRoute.js'; // Import UserLoginRout
 import  userLocationRouter  from "./routes/userLocationRouter.js";
 import stringSimilarity from 'string-similarity';
 import userAssessmentRouter from './routes/userAssessmentRouter.js'
+import AdminAssessmentRouter from "./routes/AdminAssessmentRouter.js"
 
 import 'dotenv/config'// Import dotenv package to load environment variables
 
@@ -71,5 +72,20 @@ app.post('/user/userAssessment/save',userAssessmentRouter)
 app.get("/user/userAssessment/question",userAssessmentRouter )
 
 app.patch('/user/userAssessment', userAssessmentRouter);
+
+
+//Admin CRUD
+app.use('/', AdminAssessmentRouter)
+
+app.post('/admin/assessment/save', AdminAssessmentRouter)
+
+app.get('/admin/assessment/get', AdminAssessmentRouter)
+
+app.patch('/admin/assessment/update', AdminAssessmentRouter)
+
+app.delete('/admin/assessment/delete', AdminAssessmentRouter)
+
+app.put('/admin/assessment/putdata', AdminAssessmentRouter)
+
 
 app.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server

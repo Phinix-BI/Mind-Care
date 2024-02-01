@@ -1,13 +1,6 @@
 import mongoose, { get } from "mongoose";
 
 
-const optionSchema = new mongoose.Schema({
-    text: String,
-    optionNo : Number,
-   
-});
-
-
 const questionSchema = new mongoose.Schema({
     QuestionNo : {
         type : Number,
@@ -17,59 +10,84 @@ const questionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    options : [optionSchema]
+    options : []
         
 });
 
-  
-   //question model
-   const Question = mongoose.model('Question', questionSchema)
+const allQuestionSchema = new mongoose.Schema({
+    customid :String,
+    question : [questionSchema]
+}, { _id: false })
 
-   export default Question 
+  
+//question model
+
+ const Question = mongoose.model('Question', allQuestionSchema)
+
+export default Question
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
    //sample to store many question
-   let Questions = [
-    {   
-        QuestionNo : 1,
-        QuestionText: "How is your relation with your mind?",
-        options: [
-            { text: "Paris", optionNo: 0 },
-            { text: "London", optionNo: 1 },
-            { text: "Berlin", optionNo: 2 },
-            { text: "Rome", optionNo: 3 }
-        ] 
-    },
-    {
-        QuestionNo : 2,
-        QuestionText: "Are you feeling low by any chance?",
-        options: [
-            { text: "Paris", optionNo: 0 },
-            { text: "London", optionNo: 1 },
-            { text: "Berlin", optionNo: 2 },
-            { text: "Rome", optionNo: 3 }
-        ] 
-    },
-    {  
-         QuestionNo : 3,
-        QuestionText: "Are you happy ?",
-        options: [
-            { text: "Paris",optionNo: 0 },
-            { text: "London",optionNo: 1 },
-            { text: "Berlin",optionNo: 2 },
-            { text: "Rome", optionNo: 3}
-        ] 
-    },
-    {  
-        QuestionNo : 4,
-        QuestionText: "Hpw is your mental condition?",
-        options: [
-            { text: "Paris", optionNo: 0 },
-            { text: "London", optionNo: 1 },
-            { text: "Berlin", optionNo: 2 },
-            { text: "Rome", optionNo: 3 }
-        ] 
-    }
-]
+//    let Questions = [
+//     {   
+//         QuestionNo : 1,
+//         QuestionText: "How is your relation with your mind?",
+//         options: [
+//             { text: "Paris", optionNo: 0 },
+//             { text: "London", optionNo: 1 },
+//             { text: "Berlin", optionNo: 2 },
+//             { text: "Rome", optionNo: 3 }
+//         ] 
+//     },
+//     {
+//         QuestionNo : 2,
+//         QuestionText: "Are you feeling low by any chance?",
+//         options: [
+//             { text: "Paris", optionNo: 0 },
+//             { text: "London", optionNo: 1 },
+//             { text: "Berlin", optionNo: 2 },
+//             { text: "Rome", optionNo: 3 }
+//         ] 
+//     },
+//     {  
+//          QuestionNo : 3,
+//         QuestionText: "Are you happy ?",
+//         options: [
+//             { text: "Paris",optionNo: 0 },
+//             { text: "London",optionNo: 1 },
+//             { text: "Berlin",optionNo: 2 },
+//             { text: "Rome", optionNo: 3}
+//         ] 
+//     },
+//     {  
+//         QuestionNo : 4,
+//         QuestionText: "Hpw is your mental condition?",
+//         options: [
+//             { text: "Paris", optionNo: 0 },
+//             { text: "London", optionNo: 1 },
+//             { text: "Berlin", optionNo: 2 },
+//             { text: "Rome", optionNo: 3 }
+//         ] 
+//     }
+// ]
 
 // async function saveQuestions() {
 //     try{
