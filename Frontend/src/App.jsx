@@ -20,7 +20,7 @@ import HeroSection from "./components/HeroSection/HeroSection"
 import Signup_Login_Form from "./components/Signup_Login_Form/Signup_Login_Form"
 import Diagnostic from "./components/Diagnostic/Diagnostic";
 import MCQ from "./components/MCQ/MCQ"
-
+import DoctorsPage from "./components/DoctorsPage/DoctorsPage";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/DiagnosTest",
     element:<MCQ/>,
+  },
+  {
+    path: "/FindDoctors",
+    element:<DoctorsPage/>,
   }
  
 ]);

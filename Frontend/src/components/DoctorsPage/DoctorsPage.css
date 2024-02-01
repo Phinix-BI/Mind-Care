@@ -1,0 +1,9 @@
+.Doctors_heading h2 {
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: #000;
+ 
+}
+/* .Doctors_heading {
+  padding-left: calc(100vh - 90%);
+  } */
