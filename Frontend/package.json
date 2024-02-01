@@ -12,7 +12,11 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
+
     "@material-tailwind/html": "^2.2.2",
+
+    "@material-tailwind/react": "^2.1.8",
+
     "axios": "^1.6.5",
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.7.2",

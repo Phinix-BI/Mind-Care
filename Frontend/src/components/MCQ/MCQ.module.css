@@ -5,17 +5,16 @@
 }
 
 .questions h1 {
-    font-size: 4em;
+    font-size: 2.5rem;
     line-height: 1.1;
-}
-
-.questions h2 {
-    font-size: 2.2em;
-    font-weight: 500;
+    font-weight: 600;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .questions {
-    margin: 30px;
+    margin: 10px;
 }
 
 .options{
@@ -29,6 +28,8 @@
 
 .options button {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .button {
@@ -38,7 +39,9 @@
 
 .Prevbtn,
 .Nxtbtn {
-    background-color: #687cfc;
+    display: flex;
+    background-color: #ff006f;
+    color: white;
     border: none;
     padding: 15px 52px;
     font-size: 16px;
@@ -46,6 +49,15 @@
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 8px;
+}
+.Prevbtn {
+    background-color: beige;
+    color: black;
+}
+
+.Prevbtn i, .Nxtbtn i {
+    font-size: 22px;
+    justify-content: center;
 }
 
 @media only screen and (max-width: 600px) {

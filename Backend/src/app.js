@@ -5,6 +5,8 @@ import cors from 'cors';
 import UserDataRoute from './routes/UserDataRoute.js'; // Import UserDataRoute.js functions
 import UserLoginRoute from './routes/UserLoginRoute.js'; // Import UserLoginRoute.js functions
 import  userLocationRouter  from "./routes/userLocationRouter.js";
+import stringSimilarity from 'string-similarity';
+import userAssessmentRouter from './routes/userAssessmentRouter.js'
 
 import 'dotenv/config'// Import dotenv package to load environment variables
 
@@ -61,5 +63,14 @@ app.post('/user/verify-otp',UserLoginRoute);
 
 // user location 
 app.post("/location", userLocationRouter );
+
+//user assessment 
+
+
+app.post('/user/userAssessment/save',userAssessmentRouter)
+
+app.get("/user/userAssessment/question",userAssessmentRouter )
+
+app.patch('/user/userAssessment', userAssessmentRouter);
 
 app.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server
