@@ -1,35 +1,68 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Styles from './MCQ.module.css'
 import  Diagnose_Question from '../dummydata';
 // import questions from '../../questions'; 
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GrFormNextLink } from "react-icons/gr";
-
+// import { set } from 'mongoose';
+import axios from 'axios';
+// import Question from '../../../../Backend/src/models/QuestionModel';
 const MCQ = () => {
     
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [matching, setMatching] = useState(false);
+    // const [matching, setMatching] = useState(false);
     const[matchIndex, setMatchIndex] = useState(-1);
+    const[assessment,setAssessment] = useState([]);
 
+    //CALL POST API TO SAVE USER RESPONSE
     const handleNext = () => {
-        if (currentQuestion < Diagnose_Question.length - 1) {
+        if (currentQuestion < assessment.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
         }
       };
     
-      const handlePrev = () => {
+    //CALL PATCH API TO UPDATE USER RESPONSE
+    const handlePrev = () => {
         if (currentQuestion > 0) {
           setCurrentQuestion(currentQuestion - 1);
         }
       };
 
-      const handleSubmit = () => {
+    //CALL POST API TO SAVE LAST USER RESPONSE AND SEND THE FULL RESPONSE FROM DATABASE TO THE BACKEND
+    const handleSubmit = () => {
           console.log('Submit button clicked');
       }
       
-
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get("http://localhost:3000/admin/assessment/get");
+            if (response.data.data[0]) {
+              setAssessment(response.data.data[0].slice());
+              console.log(response.data.data[0]);
+            } else {
+              console.error("No assessment data found.");
+            }
+          } catch (error) {
+            console.error("Error fetching assessment data:", error);
+          }
+        };
+    
+        fetchData();
+      },[])
       
-      // const enableVoiceRecognition = async() => {
+      
+      
+      if (assessment.length === 0) {
+        return <h1>Loading.......</h1>;
+      }
+
+      const currentQuestionData = assessment[currentQuestion];
+
+
+      // voice part
+
+      const enableVoiceRecognition = async() => {
        
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         
@@ -45,12 +78,16 @@ const MCQ = () => {
             
             const last = event.results.length - 1;
             const spokenText = event.results[last][0].transcript.trim().toLowerCase();
-            console.log(spokenText);
 
-            const response = await axios.post("http://localhost:3000/api/user/userAssessment/save",{spokenText,currentQuestion})
+            console.log(spokenText);
+      
+            const response = await axios.post("http://localhost:3000/user/userAssessment/save",
+            {userRes : spokenText, questionName:currentQuestionData.QuestionText})
            
             console.log(response.data);
+
             setMatchIndex(response.data.bestMatchIndex);
+
             let matched = response.data.match;
             
             if (matched) {
@@ -74,20 +111,18 @@ const MCQ = () => {
           };
           
           recognition.start();
-  
+      
         } 
         else {
           console.error('Speech recognition not supported in this browser.');
         }
       
-
+      }
       // enableVoiceRecognition();
-
+      
       // const handleMatching = (e) => {
-
+      
       // }
-
-    const currentQuestionData = Diagnose_Question[currentQuestion];
 
     
   return (
@@ -105,30 +140,32 @@ const MCQ = () => {
             }}
           />
         </div>
+         
+        
         <div className='flex mx-auto w-12 my-4'>
           <img src="images\logo.png"></img>
         </div>
-
-        <div className="flex justify-center p-2">{currentQuestion+1} of {Diagnose_Question.length}
+        
+        <div className="flex justify-center p-2">{currentQuestion+1} of {assessment.length}
           <div className={Styles.progressBar}>
               <div style={{ width: `${(currentQuestion / 10) * 100}%` }} className={Styles.progressFill}></div>
             </div>
         </div>
 
         <div className="bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700 mx-auto w-3/12">
-          <div className="bg-indigo-600 h-2.5 rounded-full dark:bg-indigo-500" style={{width:`${(currentQuestion / (Diagnose_Question.length - 1)) * 100}%`}}></div>
+          <div className="bg-indigo-600 h-2.5 rounded-full dark:bg-indigo-500" style={{width:`${(currentQuestion / (assessment.length - 1)) * 100}%`}}></div>
         </div>
        
         <div>
           <div key={currentQuestion} className={Styles.questions}>
-            <div className='w-screen max-w-6xl p-4 rounded-lg'><h1>{currentQuestionData.question}</h1></div>
+            <div className='w-screen max-w-6xl p-4 rounded-lg'><h1>{currentQuestionData.QuestionText}</h1></div>
             
 
             {currentQuestionData.options.map((option, optionIndex) => (
               <div key={optionIndex} className={Styles.options}>
                
               {(matchIndex === optionIndex) ? (
-                  <button type="button" className="text-purple-700 hover:text-black border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 active">
+                  <button type="button" className="text-purple-700 hover:text-black border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
                     <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label></button>
             ):( <button type="button" className="text-purple-700 hover:text-black border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                     <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label>
@@ -143,14 +180,12 @@ const MCQ = () => {
                 {currentQuestion > 0 ? (
                     <button className={Styles.Prevbtn} onClick={handlePrev}><i><GrFormPreviousLink /></i>  Prev</button>
                 ) : null}
-                {currentQuestion === Diagnose_Question.length - 1 ? 
+                {currentQuestion === assessment.length - 1 ? 
                     <button className={Styles.Nxtbtn} onClick={handleSubmit}>Submit <i><GrFormNextLink /></i></button> 
                     :
                     <button className={Styles.Nxtbtn} onClick={handleNext}>Next <i><GrFormNextLink /></i></button>
                 }
             </div>
-            
-
             
         </div>
         
@@ -160,3 +195,4 @@ const MCQ = () => {
               }
 
 export default MCQ;
+
