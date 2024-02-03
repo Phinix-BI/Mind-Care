@@ -1,6 +1,6 @@
 import { get } from 'mongoose'
-import Question from '../models/QuestionModel.js'
-import * as dotenv from "dotenv"
+import Question from '../models/QuestionModel.js';
+// import * as dotenv from "dotenv"
 
 
 
@@ -9,7 +9,7 @@ export const GetUserAssessment = async (req, res) => {
     try {
         const getSavedData = await Question.find({ customid: "mindcareAdmin" })
         console.log("Data receive successfully")
-        res.status(202).json({ data: getSavedData })
+        res.status(202).json({ data: getSavedData.map((data) => data.question)})
 
     } catch (error) {
         console.log(error)
@@ -57,27 +57,29 @@ export const UpdateUserAssessment = async (req, res) => { }
 
 
 
-export const DeleteUserAssessment = async (req, res) => { 
-  const {QuestionNo} = req.body
-  try{
-  const afterDelete = await Question.updateMany(
-    { },
-    {$pull: { question:{QuestionNo:QuestionNo} } }
-    )
-    const totalDocNo = await Question.countDocuments()
-    for(let i=QuestionNo-1; i<totalDocNo; i++){
-        const response = await Question.updateOne(
-            {question:{QuestionNo:i+2}},
-            { $set: { "question.$.QuestionNo" : i+1 } }
-   )
-   console.log(response)
-            
+export const DeleteUserAssessment = async (req, res) => {
+    const { QuestionNo } = req.body;
+    try {
+      // Delete the question with the specified QuestionNo
+      const afterDelete = await Question.updateMany(
+        {},
+        { $pull: { question: { QuestionNo: QuestionNo } } }
+      );
+  
+      // Update the QuestionNo for the remaining questions
+      const totalDocNo = await Question.countDocuments();
+      for (let i = QuestionNo; i < totalDocNo; i++) {
+        const response = await Question.updateMany(
+          { "question.QuestionNo": i + 1 },
+          { $set: { "question.$.QuestionNo": i } }
+        );
+        console.log(response);
+      }
+  
+      console.log(afterDelete);
+      res.status(201).json({ msg: "success" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-    console.log(afterDelete)
-    res.status(201).json({msg:"success"})
-  } catch(error){
-     console.log(error)
-  }
-
-}
-
+  };

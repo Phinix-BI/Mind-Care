@@ -1,10 +1,9 @@
-
-
+// Desc: UserAssessment controller to handle the user response and save it to the database
 import UserResponse from  "../Models/UserResponseModel.js"
-import Question from "../Models/QuestionModel.js"
+import Question from "../models/QuestionModel.js"
 import stringSimilarity from 'string-similarity';
 
-//GETreq
+//GETreqrs
 export const getuserResponse = async (req, res) => {
    const {userId} = req.body; 
     try{
@@ -25,36 +24,44 @@ export const getuserResponse = async (req, res) => {
 //POST
 export const saveUserResponse = async (req,res) => {
    
-    // const {response} = req.body;
-    const {spokenText} = req.body;
-    console.log("userText",spokenText);
-    const {currentQuestion} = req.body;
-    console.log("questionNo",currentQuestion);
+    const {response} = req.body;
 
-    res.json({msg:"OK"})
-    // const similarQuestion = await Question.find({QuestionNo:currentQuestion});
+    const {userRes} = req.body;
+    console.log("userText : ",userRes);
 
-    // const backendOptions = similarQuestion[0].options.map(option => option.text);
+    const {QuestionName} = req.body;
+    console.log("questionName : ",QuestionName);
+
+   
+
+    const similarQuestion = await Question.findOne({"question":{$elemMatch:{"QuestionText":QuestionName}}},{"question.$":1});
+
+    console.log("similarQuestion : ",similarQuestion.question[0].options);
+
+    const backendOptions = similarQuestion.question[0].options.map(option => option);
     
-    // function findClosestMatch(userText, backendOptions) {
-    //     const ratings = backendOptions.map((option) =>
-    //         stringSimilarity.compareTwoStrings(userText, option)
-    //     );
-    //     const bestMatchIndex = ratings.indexOf(Math.max(...ratings));
-    //     return res.json({ bestMatchIndex: bestMatchIndex + 1, match: true }); // Adjust to your specific numbering scheme
-    // }
-
-    // findClosestMatch(spokenText, backendOptions);
+    function findClosestMatch(userText, backendOptions) {
+        const ratings = backendOptions.map((option) =>
+            stringSimilarity.compareTwoStrings(userText, option)
+        );
+        const bestMatchIndex = ratings.indexOf(Math.max(...ratings));
+        return { bestMatchIndex: bestMatchIndex + 1, match: true }; // Adjust to your specific numbering scheme
+    }
     
 
-    // try{
-    //    const savedData = await UserResponse.insertMany(response);
-    //     console.log("Data saved successfully", savedData);
-    //     res.status(201).json({msg :"Success"});
-    // } 
-    // catch(error){
-    //     res.status(404).json({ message: error.message })
-    // }
+     try{
+            //  const savedData = await UserResponse.insertMany(response);
+
+            const matchResult =  findClosestMatch(userRes, backendOptions);
+
+            res.status(201).json(matchResult);
+
+            console.log("Data saved successfully", savedData);
+
+    } 
+    catch(error){
+        res.status(404).json({ message: error.message })
+    }
     // res.json({msg:"OK"})
 }
 

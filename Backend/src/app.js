@@ -26,7 +26,7 @@ app.use( bodyParser.urlencoded({extended: true}));
 app.use('/api', UserDataRoute); // Use UserDataRoute.js for all routes starting with /api
 app.use('/api', UserLoginRoute);
 app.use('/api', userAssessmentRouter);
-
+app.use('/api', AdminAssessmentRouter)
 app.use(cors());
 
 connectDB();
@@ -75,9 +75,9 @@ app.patch('/user/userAssessment', userAssessmentRouter);
 
 
 //Admin CRUD
-app.use('/', AdminAssessmentRouter)
 
-app.post('/admin/assessment/save', AdminAssessmentRouter)
+
+// app.post('/admin/assessment/save', AdminAssessmentRouter)
 
 app.get('/admin/assessment/get', AdminAssessmentRouter)
 
