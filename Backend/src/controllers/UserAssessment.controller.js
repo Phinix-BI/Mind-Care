@@ -22,48 +22,41 @@ export const getuserResponse = async (req, res) => {
 
 
 //POST
-export const saveUserResponse = async (req,res) => {
-   
-    const {response} = req.body;
+export const saveUserResponse = async (req, res) => {
+    const { response } = req.body;
+    const { userRes } = req.body;
+    console.log("userText : ", userRes);
+    const { QuestionName } = req.body;
+    console.log("questionName : ", QuestionName);
 
-    const {userRes} = req.body;
-    console.log("userText : ",userRes);
-
-    const {QuestionName} = req.body;
-    console.log("questionName : ",QuestionName);
-
-   
-
-    const similarQuestion = await Question.findOne({"question":{$elemMatch:{"QuestionText":QuestionName}}},{"question.$":1});
-
-    console.log("similarQuestion : ",similarQuestion.question[0].options);
-
-    const backendOptions = similarQuestion.question[0].options.map(option => option);
-    
-    function findClosestMatch(userText, backendOptions) {
-        const ratings = backendOptions.map((option) =>
-            stringSimilarity.compareTwoStrings(userText, option)
+    try {
+        const similarQuestion = await Question.findOne(
+            { "question": { $elemMatch: { "QuestionText": QuestionName } } },
+            { "question.$": 1 }
         );
-        const bestMatchIndex = ratings.indexOf(Math.max(...ratings));
-        return { bestMatchIndex: bestMatchIndex + 1, match: true }; // Adjust to your specific numbering scheme
+
+        console.log("similarQuestion : ", similarQuestion.question[0].options);
+
+        const backendOptions = similarQuestion.question[0].options.map((option) => option);
+
+        const matchResult = findClosestMatch(userRes, backendOptions);
+
+        res.status(201).json(matchResult);
+
+        console.log("Data saved successfully");
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    
+};
 
-     try{
-            //  const savedData = await UserResponse.insertMany(response);
-
-            const matchResult =  findClosestMatch(userRes, backendOptions);
-
-            res.status(201).json(matchResult);
-
-            console.log("Data saved successfully", savedData);
-
-    } 
-    catch(error){
-        res.status(404).json({ message: error.message })
-    }
-    // res.json({msg:"OK"})
+function findClosestMatch(userText, backendOptions) {
+    const ratings = backendOptions.map((option) =>
+        stringSimilarity.compareTwoStrings(userText, option)
+    );
+    const bestMatchIndex = ratings.indexOf(Math.max(...ratings));
+    return { bestMatchIndex: bestMatchIndex + 1, match: true }; // Adjust to your specific numbering scheme
 }
+
 
 //PATCH
 export const updateUserResponse = async (req, res) => {
