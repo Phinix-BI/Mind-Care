@@ -13,19 +13,24 @@ const MCQ = () => {
     // const [matching, setMatching] = useState(false);
     const[matchIndex, setMatchIndex] = useState(-1);
     const[assessment,setAssessment] = useState([]);
+    const [clickedOption, setClickedOption] = useState(null);
 
     //CALL POST API TO SAVE USER RESPONSE
     const handleNext = () => {
         if (currentQuestion < assessment.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
+          setClickedOption(null);
         }
+        
       };
     
     //CALL PATCH API TO UPDATE USER RESPONSE
     const handlePrev = () => {
         if (currentQuestion > 0) {
           setCurrentQuestion(currentQuestion - 1);
+          setClickedOption(null);
         }
+        
       };
 
     //CALL POST API TO SAVE LAST USER RESPONSE AND SEND THE FULL RESPONSE FROM DATABASE TO THE BACKEND
@@ -82,13 +87,14 @@ const MCQ = () => {
             console.log(spokenText);
       
             const response = await axios.post("http://localhost:3000/user/userAssessment/save",
-            {userRes : spokenText, questionName:currentQuestionData.QuestionText})
+            {userRes : spokenText, QuestionName:currentQuestionData.QuestionText})
            
             console.log(response.data);
 
             setMatchIndex(response.data.bestMatchIndex);
 
             let matched = response.data.match;
+            console.log(matched);
             
             if (matched) {
               // displayFeedback(feedbackContainer, 'Voice input recognized successfully.');
@@ -105,20 +111,21 @@ const MCQ = () => {
             // Set the flag to false when recognition ends
              
             // Restart recognition only if not currently processing a result
-            if (!isRecognitionProcessing) {
-              recognition.start();
-            }
+            // if (!isRecognitionProcessing) {
+            //   recognition.start();
+            // }
           };
           
           recognition.start();
       
-        } 
+        
+      }
         else {
           console.error('Speech recognition not supported in this browser.');
         }
       
       }
-      // enableVoiceRecognition();
+      enableVoiceRecognition();
       
       // const handleMatching = (e) => {
       
@@ -162,17 +169,16 @@ const MCQ = () => {
             
 
             {currentQuestionData.options.map((option, optionIndex) => (
-              <div key={optionIndex} className={Styles.options}>
-               
-              {(matchIndex === optionIndex) ? (
-                  <button type="button" className="text-purple-700 hover:text-black border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
-                    <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label></button>
-            ):( <button type="button" className="text-purple-700 hover:text-black border border-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                    <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label>
-                </button>)}
-               
-              </div>
-            ))}
+      <div key={optionIndex} className={Styles.options}>
+      <button
+                type="button"
+                className={`text-purple-700 hover:text-black border focus:ring-4 focus:outline-none focus:ring-purple-300 ${(matchIndex - 1) === optionIndex ? 'border-purple-700 ' : ''} ${(clickedOption === optionIndex) ? 'border-purple-700 ' : ''} font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2`}
+                onClick={() => setClickedOption(optionIndex)}
+              >
+          <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label>
+        </button>
+      </div>
+    ))}
           </div>
         </div>
 
