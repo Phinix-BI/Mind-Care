@@ -1,5 +1,5 @@
 import React from 'react'
-import Testing from '../Testing/Testing'
+import Preview from '../Preview/Preview'
 import { GiTireIronCross } from "react-icons/gi";
 const PopUpWindow = () => {
     const [showComponent, setShowComponent] = React.useState(false);
@@ -27,7 +27,7 @@ const PopUpWindow = () => {
           <div className='flex'>
             <div onClick={hideComponent}><GiTireIronCross /></div>
           </div>
-          <div className='flex'><Testing /></div>
+          <div className='flex'><Preview /></div>
           
         </div>
       )}

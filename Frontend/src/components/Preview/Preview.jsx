@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GrPrevious, GrNext } from "react-icons/gr";
-const Testing = () => {
+const Preview = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const nextSlide = () => {
@@ -37,4 +37,4 @@ const Testing = () => {
     )
 }
 
-export default Testing
+export default Preview

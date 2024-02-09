@@ -5,7 +5,7 @@ import  Diagnose_Question from '../dummydata';
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GrFormNextLink } from "react-icons/gr";
 import { GiTireIronCross } from "react-icons/gi";
-import Testing from '../Testing/Testing';
+import Preview from '../Preview/Preview';
 // import { set } from 'mongoose';
 import axios from 'axios';
 // import Question from '../../../../Backend/src/models/QuestionModel';
@@ -206,7 +206,7 @@ const MCQ = () => {
           <div className='flex'>
             <div onClick={handlePreview}><GiTireIronCross /></div>
           </div>
-          <div className='flex'><Testing /></div>
+          <div className='flex'><Preview /></div>
           
         </div>
       )}

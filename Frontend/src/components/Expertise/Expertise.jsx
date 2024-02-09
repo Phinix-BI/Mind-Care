@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Expertise = (props) => {
+const Expertise = () => {
   return (
     <div className='w-80 bg-slate-300 rounded-xl m-6'>
       <div className='flex flex-col sm:flex-row'>
