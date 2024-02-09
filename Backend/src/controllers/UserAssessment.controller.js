@@ -40,6 +40,7 @@ export const saveUserResponse = async (req, res) => {
         const backendOptions = similarQuestion.question[0].options.map((option) => option);
 
         const matchResult = findClosestMatch(userRes, backendOptions);
+        console.log("matchResult : ", matchResult);
 
         res.status(201).json(matchResult);
 

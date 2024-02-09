@@ -4,6 +4,8 @@ import  Diagnose_Question from '../dummydata';
 // import questions from '../../questions'; 
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GrFormNextLink } from "react-icons/gr";
+import { GiTireIronCross } from "react-icons/gi";
+import Testing from '../Testing/Testing';
 // import { set } from 'mongoose';
 import axios from 'axios';
 // import Question from '../../../../Backend/src/models/QuestionModel';
@@ -14,6 +16,8 @@ const MCQ = () => {
     const[matchIndex, setMatchIndex] = useState(-1);
     const[assessment,setAssessment] = useState([]);
     const [clickedOption, setClickedOption] = useState(null);
+
+    const [showPreview, setShowPreview] = useState(false);
 
     //CALL POST API TO SAVE USER RESPONSE
     const handleNext = () => {
@@ -35,7 +39,11 @@ const MCQ = () => {
 
     //CALL POST API TO SAVE LAST USER RESPONSE AND SEND THE FULL RESPONSE FROM DATABASE TO THE BACKEND
     const handleSubmit = () => {
-          console.log('Submit button clicked');
+        console.log('Submit button clicked');
+        setShowPreview(true);
+      }
+      const handlePreview = () => {
+        setShowPreview(false);
       }
       
       useEffect(() => {
@@ -134,7 +142,7 @@ const MCQ = () => {
     
   return (
     <div  className="bg-white flex justify-center h-screen">
-        <div className="relative isolate px-6 pt-14 lg:px-8 max-w-screen-xl">
+        <div className="absolute isolate px-6 pt-14 lg:px-8 max-w-screen-xl">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -192,6 +200,16 @@ const MCQ = () => {
                     <button className={Styles.Nxtbtn} onClick={handleNext}>Next <i><GrFormNextLink /></i></button>
                 }
             </div>
+            {showPreview && (
+        <div className='m-5 flex justify-center'>
+          
+          <div className='flex'>
+            <div onClick={handlePreview}><GiTireIronCross /></div>
+          </div>
+          <div className='flex'><Testing /></div>
+          
+        </div>
+      )}
             
         </div>
         
