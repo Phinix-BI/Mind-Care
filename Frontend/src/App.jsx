@@ -21,6 +21,7 @@ import Signup_Login_Form from "./components/Signup_Login_Form/Signup_Login_Form"
 import Diagnostic from "./components/Diagnostic/Diagnostic";
 import MCQ from "./components/MCQ/MCQ"
 import DoctorsPage from "./components/DoctorsPage/DoctorsPage";
+import AccountSettings from "./components/AccountSettings/AccountSettings"
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/ProfilePage",
-    element: <ProfilePage />,
+    element: <AccountSettings />,
   },
   {
     path: "/Signup_Login_Form",
