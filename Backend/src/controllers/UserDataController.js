@@ -69,10 +69,10 @@ export const UpdateUserData = async (req, res) => {
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
         const userId = decoded.id;
     
-        const { fullName, phone, email, age, gender } = req.body;
+        const {firstName,lastName,phone, email, age, gender } = req.body;
         
-        const firstName = fullName.split(" ")[0];
-        const lastName = fullName.split(" ")[1];
+        // const firstName = fullName.split(" ")[0];
+        // const lastName = fullName.split(" ")[1];
         const userData = {
             firstName,
             lastName,

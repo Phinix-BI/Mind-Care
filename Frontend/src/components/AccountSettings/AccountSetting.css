@@ -1,0 +1,14 @@
+#wrapper {
+    width: 93px; /*play with this value */
+    height: 28px; /*play with this value */
+
+    border:none;
+    overflow:hidden;
+}
+
+#browse{
+    /*play with this value */
+    opacity:0; /* set to .5 or something so you can better position it as an overlay then back to zero again after you're done */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
