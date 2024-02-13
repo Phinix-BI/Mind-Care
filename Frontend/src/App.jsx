@@ -5,7 +5,7 @@ import {createBrowserRouter,RouterProvider} from "react-router-dom";
 
 import "./index.css";
 
-import ProfilePage from "./components/ProfilePage/ProfilePage"
+// import ProfilePage from "./components/ProfilePage/ProfilePage"
 
 
 // import SignupPage from "./components/SignupPage/SignupPage"
