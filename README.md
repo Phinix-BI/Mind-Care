@@ -44,7 +44,7 @@ We welcome contributions from the community to improve MindCare and make it more
 
 ## Support 🤗
 
-If you encounter any issues or have any questions, feel free to reach out to us at support@mindcare.com.
+If you encounter any issues or have any questions, feel free to reach out to us at mindcareofficial@gmail.com.
 
 ## License 📜
 
