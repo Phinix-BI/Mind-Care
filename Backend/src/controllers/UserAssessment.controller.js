@@ -51,7 +51,7 @@ export const saveUserResponse = async (req, res) => {
         const backendOptions = similarQuestion.question[0].options.map((option) => option);
         const matchResult = findClosestMatch(userRes, backendOptions);
 
-        const userSelectedOption = similarQuestion.question[0].options[matchResult.bestMatchIndex];
+        const userSelectedOption = similarQuestion.question[0].options[matchResult.bestMatchIndex - 1];
 
         const assessment = { q: QuestionName, a: userSelectedOption };
 
