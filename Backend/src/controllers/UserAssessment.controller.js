@@ -2,7 +2,8 @@
 import UserResponse from "../models/UserResponseModel.js"
 import Question from "../models/QuestionModel.js"
 import stringSimilarity from 'string-similarity';
-
+import { TOTAL_QUESTIONS } from '../constants.js'
+import jwt from 'jsonwebtoken';
 //GETreqrs
 export const getuserResponse = async (req, res) => {
     const { userId } = req.body;
@@ -25,7 +26,10 @@ export const getuserResponse = async (req, res) => {
 export const saveUserResponse = async (req, res) => {
     try {
 
-        const { userId, userRes, QuestionName } = req.body;
+        const { token, userRes, QuestionName } = req.body;
+        
+        const userId = jwt.verify(token, process.env.TOKEN_SECRET).id;
+        console.log("User response:", userId);
 
         if (!userId) {
             return res.status(400).json({ "msg": "UserId is required" });
@@ -82,7 +86,8 @@ export const saveUserResponse = async (req, res) => {
         }
 
         await existingUserResponse.save();
-        return res.status(200).json({ "msg": "Data saved successfully", matchResult });
+        console.log("Data saved successfully", matchResult);
+        res.status(200).json({ "msg": "Data saved successfully", matchResult });
 
     } catch (error) {
         console.error("Error while saving user response:", error);
@@ -103,45 +108,45 @@ function findClosestMatch(userText, backendOptions) {
 export const updateUserResponse = async (req, res) => {
 
     //extract data and validate
-    const { userId } = req.params
-    const { qNo, a } = req.body
-    if (!userId || !qNo || !a) {
-        return res.status(400).json({ "message": "All field is required" })
-    }
+    // const { userId } = req.params
+    // const { qNo, a } = req.body
+    // if (!userId || !qNo || !a) {
+    //     return res.status(400).json({ "message": "All field is required" })
+    // }
 
-    try {
-        await UserResponse.findOne({ userId: userId })
-            .then(async (result) => {
-                let storedData = result
-                let index = storedData.AllAssessments.length - 1
-                let lastAssessments = storedData.AllAssessments[index]
-                let updateDocument = lastAssessments.assessments[qNo - 1]
-                console.log(updateDocument)
-                //updating
-                updateDocument.a = a
+    // try {
+    //     await UserResponse.findOne({ userId: userId })
+    //         .then(async (result) => {
+    //             let storedData = result
+    //             let index = storedData.AllAssessments.length - 1
+    //             let lastAssessments = storedData.AllAssessments[index]
+    //             let updateDocument = lastAssessments.assessments[qNo - 1]
+    //             console.log(updateDocument)
+    //             //updating
+    //             updateDocument.a = a
 
-                console.log(updateDocument)
+    //             console.log(updateDocument)
 
-                await storedData.save()
-                    .then((result) => {
-                        console.log("Data updated successfully:", result)
-                        res.status(200).json({ "message": "Success" })
-                    })
-                    .catch((error) => {
-                        console.log("error to update data:", error);
-                        res.status(500).json({ "message": error })
-                    })
+    //             await storedData.save()
+    //                 .then((result) => {
+    //                     console.log("Data updated successfully:", result)
+    //                     res.status(200).json({ "message": "Success" })
+    //                 })
+    //                 .catch((error) => {
+    //                     console.log("error to update data:", error);
+    //                     res.status(500).json({ "message": error })
+    //                 })
 
-            })
-            .catch(error => {
-                console.log("UserId not found", error)
-                res.status(400).json({ "message": error })
-            })
-    } catch (error) {
-        console.log(" error", error)
-        res.status(500).json({ "message": error })
+    //         })
+    //         .catch(error => {
+    //             console.log("UserId not found", error)
+    //             res.status(400).json({ "message": error })
+    //         })
+    // } catch (error) {
+    //     console.log(" error", error)
+    //     res.status(500).json({ "message": error })
 
-    }
+    // }
 }
 
 // connectDB()

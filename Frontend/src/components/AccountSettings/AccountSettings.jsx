@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { checkUserToken,setLoginStatus } from '../Utility/authUtils';
 import Button from '../Button/Button'
-import './AccountSetting.css';
+
 const AccountSettings = ({onUpdate}) => {
 
     const navigate = useNavigate();

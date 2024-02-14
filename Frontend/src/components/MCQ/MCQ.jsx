@@ -96,9 +96,10 @@ const MCQ = () => {
             const spokenText = event.results[last][0].transcript.trim().toLowerCase();
 
             console.log(spokenText);
-      
+            const localUserId = localStorage.getItem('token');
+            console.log(localUserId);
             const response = await axios.post("http://localhost:3000/user/userAssessment/save",
-            {userRes : spokenText, QuestionName:currentQuestionData.QuestionText})
+            {userRes : spokenText, QuestionName:currentQuestionData.QuestionText , token:localUserId})
            
             console.log(response.data);
 
