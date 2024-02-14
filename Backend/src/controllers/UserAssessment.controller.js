@@ -1,21 +1,21 @@
 // Desc: UserAssessment controller to handle the user response and save it to the database
-import UserResponse from  "../Models/UserResponseModel.js"
+import UserResponse from "../models/UserResponseModel.js"
 import Question from "../models/QuestionModel.js"
 import stringSimilarity from 'string-similarity';
 
 //GETreqrs
 export const getuserResponse = async (req, res) => {
-   const {userId} = req.body; 
-    try{
-        const getSavedData = await UserResponse.findOne({userId:userId});
-        console.log("Data get from DB:",getSavedData);
+    const { userId } = req.body;
+    try {
+        const getSavedData = await UserResponse.findOne({ userId: userId });
+        console.log("Data get from DB:", getSavedData);
         res.json(getSavedData)
     }
-    catch(error){
+    catch (error) {
         console.log("Error to get data", error);
         res.status(404).json({ message: error.message });
     }
-    
+
 }
 
 
@@ -24,7 +24,7 @@ export const getuserResponse = async (req, res) => {
 //POST
 export const saveUserResponse = async (req, res) => {
     try {
-        
+
         const { userId, userRes, QuestionName } = req.body;
 
         if (!userId) {
@@ -46,17 +46,17 @@ export const saveUserResponse = async (req, res) => {
 
         const backendOptions = similarQuestion.question[0].options.map((option) => option);
         const matchResult = findClosestMatch(userRes, backendOptions);
-      
+
         const userSelectedOption = similarQuestion.question[0].options[matchResult.bestMatchIndex];
 
-        const assessment = { q : QuestionName, a : userSelectedOption };
+        const assessment = { q: QuestionName, a: userSelectedOption };
 
         const existingUserResponse = await UserResponse.findOne({ userId });
 
         if (!existingUserResponse) {
             // console.log("User not found, creating new user");
-            const newUserResponse = await UserResponse.insertMany([{userId : userId}]
-                
+            const newUserResponse = await UserResponse.insertMany([{ userId: userId }]
+
                 // AllAssessments: [{ complete: false, assessments: [assessment] }]
             );
 
@@ -82,7 +82,7 @@ export const saveUserResponse = async (req, res) => {
         }
 
         await existingUserResponse.save();
-        return res.status(200).json({ "msg": "Data saved successfully",matchResult });
+        return res.status(200).json({ "msg": "Data saved successfully", matchResult });
 
     } catch (error) {
         console.error("Error while saving user response:", error);
@@ -101,7 +101,47 @@ function findClosestMatch(userText, backendOptions) {
 
 //PATCH
 export const updateUserResponse = async (req, res) => {
-   
+
+    //extract data and validate
+    const { userId } = req.params
+    const { qNo, a } = req.body
+    if (!userId || !qNo || !a) {
+        return res.status(400).json({ "message": "All field is required" })
+    }
+
+    try {
+        await UserResponse.findOne({ userId: userId })
+            .then(async (result) => {
+                let storedData = result
+                let index = storedData.AllAssessments.length - 1
+                let lastAssessments = storedData.AllAssessments[index]
+                let updateDocument = lastAssessments.assessments[qNo - 1]
+                console.log(updateDocument)
+                //updating
+                updateDocument.a = a
+
+                console.log(updateDocument)
+
+                await storedData.save()
+                    .then((result) => {
+                        console.log("Data updated successfully:", result)
+                        res.status(200).json({ "message": "Success" })
+                    })
+                    .catch((error) => {
+                        console.log("error to update data:", error);
+                        res.status(500).json({ "message": error })
+                    })
+
+            })
+            .catch(error => {
+                console.log("UserId not found", error)
+                res.status(400).json({ "message": error })
+            })
+    } catch (error) {
+        console.log(" error", error)
+        res.status(500).json({ "message": error })
+
+    }
 }
 
 // connectDB()
