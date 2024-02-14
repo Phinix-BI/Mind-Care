@@ -23,30 +23,70 @@ export const getuserResponse = async (req, res) => {
 
 //POST
 export const saveUserResponse = async (req, res) => {
-    const { response } = req.body;
-    const { userRes } = req.body;
-    console.log("userText : ", userRes);
-    const { QuestionName } = req.body;
-    console.log("questionName : ", QuestionName);
-
     try {
+        
+        const { userId, userRes, QuestionName } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ "msg": "UserId is required" });
+        }
+
+        if (!QuestionName || !userRes) {
+            return res.status(400).json({ "msg": "Body data fields are empty" });
+        }
+
         const similarQuestion = await Question.findOne(
             { "question": { $elemMatch: { "QuestionText": QuestionName } } },
             { "question.$": 1 }
         );
 
-        console.log("similarQuestion : ", similarQuestion.question[0].options);
+        if (!similarQuestion) {
+            return res.status(404).json({ "msg": "Question not found" });
+        }
 
         const backendOptions = similarQuestion.question[0].options.map((option) => option);
-
         const matchResult = findClosestMatch(userRes, backendOptions);
-        console.log("matchResult : ", matchResult);
+      
+        const userSelectedOption = similarQuestion.question[0].options[matchResult.bestMatchIndex];
 
-        res.status(201).json(matchResult);
+        const assessment = { q : QuestionName, a : userSelectedOption };
 
-        console.log("Data saved successfully");
+        const existingUserResponse = await UserResponse.findOne({ userId });
+
+        if (!existingUserResponse) {
+            // console.log("User not found, creating new user");
+            const newUserResponse = await UserResponse.insertMany([{userId : userId}]
+                
+                // AllAssessments: [{ complete: false, assessments: [assessment] }]
+            );
+
+            const updatedUserResponse = await UserResponse.updateMany({ userId }, {
+                $push: {
+                    AllAssessments: { assessments: assessment }
+                }
+            });
+            console.log("New user response:", updatedUserResponse);
+            // await newUserResponse.save();
+            return res.status(201).json({ "msg": "User created and first data pushed" });
+        }
+
+        const lastAssessment = existingUserResponse.AllAssessments.slice(-1)[0];
+
+        if (lastAssessment.complete || lastAssessment.assessments.length >= TOTAL_QUESTIONS) {
+            existingUserResponse.AllAssessments.push({ complete: false, assessments: [assessment] });
+        } else {
+            lastAssessment.assessments.push(assessment);
+            if (lastAssessment.assessments.length >= TOTAL_QUESTIONS) {
+                lastAssessment.complete = true;
+            }
+        }
+
+        await existingUserResponse.save();
+        return res.status(200).json({ "msg": "Data saved successfully",matchResult });
+
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Error while saving user response:", error);
+        res.status(500).json({ "error": "Internal server error" });
     }
 };
 
@@ -61,7 +101,7 @@ function findClosestMatch(userText, backendOptions) {
 
 //PATCH
 export const updateUserResponse = async (req, res) => {
-
+   
 }
 
 // connectDB()

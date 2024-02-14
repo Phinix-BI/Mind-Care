@@ -1,5 +1,5 @@
 
-import UserResponse from "../Models/UserResponseModel.js";
+import UserResponse from "../models/UserResponseModel.js";
 
 //to send the analyzed data to user
 export const getAiResponse = async (req, res) => {
