@@ -5,8 +5,8 @@ import {createBrowserRouter,RouterProvider} from "react-router-dom";
 
 import "./index.css";
 
+//import ProfilePage from "./components/ProfilePage/ProfilePage"
 // import ProfilePage from "./components/ProfilePage/ProfilePage"
-
 
 // import SignupPage from "./components/SignupPage/SignupPage"
 // import LoginPage from "./components/LoginPage/LoginPage"
@@ -16,12 +16,12 @@ import "./index.css";
 // import LoginPage from "./components/LoginPage/LoginPage"
 
 import HomePage from "./components/HomePage/HomePage"
-import HeroSection from "./components/HeroSection/HeroSection"
 import Signup_Login_Form from "./components/Signup_Login_Form/Signup_Login_Form"
 import Diagnostic from "./components/Diagnostic/Diagnostic";
 import MCQ from "./components/MCQ/MCQ"
 import DoctorsPage from "./components/DoctorsPage/DoctorsPage";
 import AccountSettings from "./components/AccountSettings/AccountSettings"
+import Chat from "./components/Chat/Chat"
 
 const router = createBrowserRouter([
   {
@@ -47,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/FindDoctors",
     element:<DoctorsPage/>,
+  },
+  {
+    path: "/chat",
+    element:<Chat/>,
   }
  
 ]);
