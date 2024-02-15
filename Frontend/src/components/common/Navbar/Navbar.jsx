@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+
 const navigation = [
   { name: 'Diagnose ', href: '#' },
   { name: '1:1 AI Therapy', href: 'chat' },
