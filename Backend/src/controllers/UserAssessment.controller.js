@@ -65,7 +65,7 @@ export const saveUserResponse = async (req, res) => {
 
                 // AllAssessments: [{ complete: false, assessments: [assessment] }]
             );
-
+            
             const updatedUserResponse = await UserResponse.updateMany({ userId }, {
                 $push: {
                     AllAssessments: { assessments: assessment }
@@ -81,12 +81,23 @@ export const saveUserResponse = async (req, res) => {
         if (lastAssessment.complete || lastAssessment.assessments.length >= TOTAL_QUESTIONS) {
             existingUserResponse.AllAssessments.push({ complete: false, assessments: [assessment] });
         } else {
+            let flag = 1;
+            //update the ans
+            for (let ob of lastAssessment.assessments){
+                    if(ob.q === assessment.q){
+                        ob.a = assessment.a;
+                        flag = 0;
+                        break;
+                    }
+            }
+            if(flag){
             lastAssessment.assessments.push(assessment);
+            }
+
             if (lastAssessment.assessments.length >= TOTAL_QUESTIONS) {
                 lastAssessment.complete = true;
             }
         }
-
         await existingUserResponse.save();
         console.log("Data saved successfully", matchResult);
         res.status(200).json({ "msg": "Data saved successfully", matchResult });
