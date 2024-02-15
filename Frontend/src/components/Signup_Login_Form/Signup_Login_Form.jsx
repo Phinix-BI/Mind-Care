@@ -223,13 +223,13 @@ const Signup_Login_Form = () => {
               <>
               <div className="input-field">
               <i><FaUser /></i>
-              <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input type="text" className='focus:ring-0' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               <PasswordInput password={password} setPassword={setPassword} placeholder={"Password"} />
              
-            <div className="abc">
-              <div className="login_page_remember_me">
-                <input type="checkbox" id="remember_me" />
+            <div className="abc ">
+              <div className="login_page_remember_me ">
+                <input type="checkbox" className='focus:ring-0'  id="remember_me" />
                 <label htmlFor="remember_me"> Remember Me</label>
               </div>
               <div className="forgot_password">
@@ -246,14 +246,14 @@ const Signup_Login_Form = () => {
             <>
             <div className="input-field">
               <i><GrMail /></i>
-              <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input type="text" className='focus:ring-0' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               {loader ? (
                 <div className="loader">
               <span>Please wait...</span> 
                 </div>
               ) : null}
-              <input type="submit" value="Send Otp" className="btn1 solid" onClick={handleEmailVerification} />
+              <input type="submit"  value="Send Otp" className="btn1 solid focus:ring-0" onClick={handleEmailVerification} />
               </>
               ) : null
               }
@@ -262,7 +262,7 @@ const Signup_Login_Form = () => {
                 <>
                 <div className="input-field">
                 <i><FaKey /></i>
-              <input type="text" placeholder="OTP" value={otp} onChange={(e) => setOtp(e.target.value)} />
+              <input type="text" className='focus:ring-0' placeholder="OTP" value={otp} onChange={(e) => setOtp(e.target.value)} />
               </div>
               <input type="submit" value="Next" className="btn1 solid" onClick={handleOtpVerification} />
               </>
@@ -290,13 +290,13 @@ const Signup_Login_Form = () => {
             <IconComponent role={role} setRole={setRole} />
             <div className="input-field">
               <i><FaUser /></i>
-              <input type="text" placeholder="Username" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              <input type="text" className='focus:ring-0' placeholder="Username" value={fullName} onChange={(e) => setFullName(e.target.value)} />
             </div>
             <div className="input-field">
               <i><GrMail /></i>
-              <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input type="email" className='focus:ring-0' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
-            <PasswordInput password={password} setPassword={setPassword} />
+            <PasswordInput password={password} setPassword={setPassword} placeholder={"Password"}/>
             <input type="submit" className="btn1" value="Sign up" onClick={handleRegisterClick} />
           </form>
           

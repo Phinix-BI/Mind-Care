@@ -15,7 +15,7 @@ const PasswordInput = ({password, setPassword , placeholder}) => {
         <i><FaLock /></i>
         <input
           type={showPassword ? 'text' : 'password'}
-          value={password}
+          value={password} className='focus:ring-0'
           onChange={(e) => setPassword(e.target.value)}
           placeholder={placeholder}
         />
