@@ -14,6 +14,7 @@ import  userLocationRouter  from "./routes/userLocationRouter.js";
 import userAssessmentRouter from './routes/userAssessmentRouter.js'
 import AdminAssessmentRouter from "./routes/AdminAssessmentRouter.js"
 import initializeSocket from './Socket.js';
+import DrAppointmentRouter from "./routes/DrAppointmentRouter.js";
 
 import connectDB from './db/index.js';
 
@@ -31,6 +32,8 @@ app.use('/api', UserDataRoute); // Use UserDataRoute.js for all routes starting 
 app.use('/api', UserLoginRoute);
 app.use('/api', userAssessmentRouter);
 app.use('/api', AdminAssessmentRouter);
+app.use('/api', DrAppointmentRouter);
+
 
 
 app.use(cors());
@@ -76,27 +79,30 @@ app.post('/user/verify-otp',UserLoginRoute);
 // user location 
 app.post("/location", userLocationRouter );
 
-//user assessment 
-  
-app.post('/user/userAssessment/save',userAssessmentRouter)
+//user assessment  
+app.post('/user/userAssessment/save',userAssessmentRouter);
 
-app.get("/user/userAssessment/question",userAssessmentRouter )
+app.get("/user/userAssessment/question",userAssessmentRouter );
 
 app.patch('/user/userAssessment', userAssessmentRouter);
 
 
 //Admin CRUD
-
-
 // app.post('/admin/assessment/save', AdminAssessmentRouter)
 
-app.get('/admin/assessment/get', AdminAssessmentRouter)
+app.get('/admin/assessment/get', AdminAssessmentRouter);
 
-app.patch('/admin/assessment/update', AdminAssessmentRouter)
+app.patch('/admin/assessment/update', AdminAssessmentRouter);
 
-app.delete('/admin/assessment/delete', AdminAssessmentRouter)
+app.delete('/admin/assessment/delete', AdminAssessmentRouter);
 
-app.put('/admin/assessment/putdata', AdminAssessmentRouter)
+app.put('/admin/assessment/putdata', AdminAssessmentRouter);
+
+
+//DR appointment
+app.post('/',DrAppointmentRouter);
+
+app.put('/',DrAppointmentRouter);
 
 
 const httpServer = server.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server
