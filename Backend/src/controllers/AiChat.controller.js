@@ -36,8 +36,8 @@ export const chatWithAiController = async (usermessage,socket) => {
 
 }
 
-export const voiceChatWithAiController = async (req, res) => {
+// export const voiceChatWithAiController = async (req, res) => {
 
 
 
-}
+// }
