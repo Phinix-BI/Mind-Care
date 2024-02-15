@@ -6,17 +6,19 @@ import { TOTAL_QUESTIONS } from '../constants.js'
 import jwt from 'jsonwebtoken';
 //GETreqrs
 export const getuserResponse = async (req, res) => {
-    const { userId } = req.body;
+    const {userToken} = req.query;
+
+    const userId = jwt.verify(userToken, process.env.TOKEN_SECRET).id;
+
     try {
         const getSavedData = await UserResponse.findOne({ userId: userId });
-        console.log("Data get from DB:", getSavedData);
+        // console.log("Data get from DB:", getSavedData);
         res.json(getSavedData)
     }
     catch (error) {
         console.log("Error to get data", error);
         res.status(404).json({ message: error.message });
     }
-
 }
 
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Styles from './MCQ.module.css'
-import  Diagnose_Question from '../dummydata';
+// import  Diagnose_Question from '../dummydata';
+
 // import questions from '../../questions'; 
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GrFormNextLink } from "react-icons/gr";
@@ -8,6 +9,7 @@ import { GiTireIronCross } from "react-icons/gi";
 import Preview from '../Preview/Preview';
 // import { set } from 'mongoose';
 import axios from 'axios';
+// import { set } from 'mongoose';
 // import Question from '../../../../Backend/src/models/QuestionModel';
 const MCQ = () => {
     
@@ -16,14 +18,17 @@ const MCQ = () => {
     const[matchIndex, setMatchIndex] = useState(-1);
     const[assessment,setAssessment] = useState([]);
     const [clickedOption, setClickedOption] = useState(null);
-
+    
     const [showPreview, setShowPreview] = useState(false);
     const [blurBG, setBlurBG] = useState(false);
+
+    const localUserId = localStorage.getItem('token');
 
     //CALL POST API TO SAVE USER RESPONSE
     const handleNext = () => {
         if (currentQuestion < assessment.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
+          setMatchIndex(-1);
           setClickedOption(null);
         }
         
@@ -33,6 +38,7 @@ const MCQ = () => {
     const handlePrev = () => {
         if (currentQuestion > 0) {
           setCurrentQuestion(currentQuestion - 1);
+          setMatchIndex(-1);
           setClickedOption(null);
         }
         
@@ -96,14 +102,14 @@ const MCQ = () => {
             const spokenText = event.results[last][0].transcript.trim().toLowerCase();
 
             console.log(spokenText);
-            const localUserId = localStorage.getItem('token');
-            console.log(localUserId);
+            
+            // console.log(localUserId);
             const response = await axios.post("http://localhost:3000/user/userAssessment/save",
             {userRes : spokenText, QuestionName:currentQuestionData.QuestionText , token:localUserId})
            
             console.log(response.data);
-
-            setMatchIndex(response.data.bestMatchIndex);
+            console.log(response.data.matchResult.bestMatchIndex);
+            setMatchIndex(response.data.matchResult.bestMatchIndex);
 
             let matched = response.data.match;
             console.log(matched);
