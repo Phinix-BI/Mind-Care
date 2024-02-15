@@ -5,13 +5,14 @@ import HeroSection from '../HeroSection/HeroSection'
 import CTA from '../CTA/CTA'
 import Testimonial from '../Testinomials/Testimonial'
 import Features from "../Features/Features"
+import {Link} from 'react-router-dom'
 // import NavBar from '../common/NavBar/NavBar'
 const HomePage = () => {
   return (
    <>
     <Navbar />
     <HeroSection />
-    <CTA />
+    <Link to="/diagnos"><CTA /></Link>
     <Features />
     <CTA />
     

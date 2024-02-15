@@ -4,6 +4,7 @@ import Footer from '../common/Footer/Footer'
 import HeroSection from '../HeroSection/HeroSection'
 import NavBar from '../common/Navbar/Navbar'
 import CTA from "../CTA/CTA"
+import {Link} from 'react-router-dom'
 const Diagnostic = () => {
   return (
     <div className='bg-white'>
@@ -24,7 +25,7 @@ const Diagnostic = () => {
          <Expertise /> <Expertise />
         </div> */}
 
-        <CTA />
+        <Link to="/diagnosTest"><CTA /></Link>
 
         
       </div>

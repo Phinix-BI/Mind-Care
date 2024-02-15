@@ -2,14 +2,14 @@ import React from 'react';
 import MessageAI from '../MessageAI/MessageAI';
 import MessageUser from '../MessageUser/MessageUser';
 import TypingBox from '../TypingBox/TypingBox';
-import Navbar from '../Navbar/Navbar'
+import Navbar from '../common/Navbar2.0/Navbar2.0'
 
 const Chat = () => {
   return (
     <div className='h-100vh'> {/* Apply background color to the entire chat interface */}
       <Navbar />
       {/* Render the NavBar component */}
-      <div className='max-w-screen-lg mx-auto'>
+      <div className='max-w-screen-xl mx-auto'>
       
         {/* Welcome Note */}
         <div className='text-center p-4'>
