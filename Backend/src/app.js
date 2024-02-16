@@ -100,9 +100,13 @@ app.put('/admin/assessment/putdata', AdminAssessmentRouter);
 
 
 //DR appointment
-app.post('/',DrAppointmentRouter);
+app.get('/dr/appointment/details', DrAppointmentRouter);
 
-app.put('/',DrAppointmentRouter);
+app.post('/dr/req/save',DrAppointmentRouter)
+
+app.put('/dr/req/acceptstatus',DrAppointmentRouter);
+
+app.delete('/dr/appointment/delete',DrAppointmentRouter);
 
 
 const httpServer = server.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server
