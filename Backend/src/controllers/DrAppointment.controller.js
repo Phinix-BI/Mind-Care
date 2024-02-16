@@ -193,4 +193,70 @@ export const getAppointmentDetails = async (req, res) => {
 
 
 
+//case1: dr selects unaccept  
+//case1: dr chckup done 
+export const deleteAppointmentDetails = async (req, res) => {
 
+    const { drId, userId } = req.body;
+
+    if (!drId || !userId) { return res.status(400).json("req body data missing") }
+
+    try {
+        
+        const response = await DrAppointmentModel.findOneAndUpdate(
+
+            //filter criteria
+            { drId: drId, "appointmentDetails.userId": userId },
+
+            // update
+            {
+                $pull: {
+                    "appointmentDetails": {
+                        "userId": userId
+                    }
+                }
+            },
+             //return manual set
+            { returnDocument: "after" }
+
+        )
+
+        if(response){
+
+            //if array is empty afer pull delete the entire dr appointment document
+            if(response.appointmentDetails.length === 0){
+                
+                const deleteResponse = await DrAppointmentModel.findOneAndDelete(
+                    
+                    {drId : drId}
+                    
+                    )
+                    
+                    console.log("Data deleted...therefore Dr appointment list got empty and deleted successfully")
+                    
+                    res.status(201).json("Data deleted...therefore Dr appointment list got empty and deleted successfully");
+
+                } else {
+                
+                   console.log("Data deleted and data after delete:",response);
+       
+                   res.status(201).json({"Data deleted and data after delete: ":response});
+
+                }
+
+        //if array is not empty after pull simply printing the remain data after delete in DB
+        } else {
+
+            console.log("No data found to delete",response);
+
+            res.status(500).json({"No data found to delete":response});          
+             
+        }
+        
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
