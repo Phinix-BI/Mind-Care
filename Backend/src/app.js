@@ -2,14 +2,19 @@ import express from 'express';  // Import express
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { Server } from 'socket.io';
+import http from 'http';
+import stringSimilarity from 'string-similarity';
+import 'dotenv/config'// Import dotenv package to load environment variables
+
+
 import UserDataRoute from './routes/UserDataRoute.js'; // Import UserDataRoute.js functions
 import UserLoginRoute from './routes/UserLoginRoute.js'; // Import UserLoginRoute.js functions
 import  userLocationRouter  from "./routes/userLocationRouter.js";
-import stringSimilarity from 'string-similarity';
 import userAssessmentRouter from './routes/userAssessmentRouter.js'
 import AdminAssessmentRouter from "./routes/AdminAssessmentRouter.js"
-
-import 'dotenv/config'// Import dotenv package to load environment variables
+import initializeSocket from './Socket.js';
+import DrAppointmentRouter from "./routes/DrAppointmentRouter.js";
 
 import connectDB from './db/index.js';
 
@@ -26,14 +31,23 @@ app.use( bodyParser.urlencoded({extended: true}));
 app.use('/api', UserDataRoute); // Use UserDataRoute.js for all routes starting with /api
 app.use('/api', UserLoginRoute);
 app.use('/api', userAssessmentRouter);
-app.use('/api', AdminAssessmentRouter)
+app.use('/api', AdminAssessmentRouter);
+app.use('/api', DrAppointmentRouter);
+
+
+
 app.use(cors());
 
-connectDB();
-// console.log(process.env.TOKEN_SECRET);
 
-app.get('/', (req, res) => { // Default route
-    res.send('Hello World!'); // Send response to GET requests to /api
+const server = http.createServer(app); // Create a server using express app
+
+const io = initializeSocket(server);
+
+connectDB();
+
+
+app.get('/', (req, res) => { 
+    res.send('Hello World!'); 
 });
 
 
@@ -65,27 +79,34 @@ app.post('/user/verify-otp',UserLoginRoute);
 // user location 
 app.post("/location", userLocationRouter );
 
-//user assessment 
-  
-app.post('/user/userAssessment/save',userAssessmentRouter)
+//user assessment  
+app.post('/user/userAssessment/save',userAssessmentRouter);
 
-app.get("/user/userAssessment/question",userAssessmentRouter )
+app.get("/user/userAssessment/question",userAssessmentRouter );
 
 app.patch('/user/userAssessment', userAssessmentRouter);
 
 
 //Admin CRUD
-
-
 // app.post('/admin/assessment/save', AdminAssessmentRouter)
 
-app.get('/admin/assessment/get', AdminAssessmentRouter)
+app.get('/admin/assessment/get', AdminAssessmentRouter);
 
-app.patch('/admin/assessment/update', AdminAssessmentRouter)
+app.patch('/admin/assessment/update', AdminAssessmentRouter);
 
-app.delete('/admin/assessment/delete', AdminAssessmentRouter)
+app.delete('/admin/assessment/delete', AdminAssessmentRouter);
 
-app.put('/admin/assessment/putdata', AdminAssessmentRouter)
+app.put('/admin/assessment/putdata', AdminAssessmentRouter);
 
 
-app.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server
+//DR appointment
+app.get('/dr/appointment/details', DrAppointmentRouter);
+
+app.post('/dr/req/save',DrAppointmentRouter)
+
+app.put('/dr/req/acceptstatus',DrAppointmentRouter);
+
+app.delete('/dr/appointment/delete',DrAppointmentRouter);
+
+
+const httpServer = server.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server
