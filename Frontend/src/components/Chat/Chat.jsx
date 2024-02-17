@@ -62,7 +62,7 @@ const Chat = () => {
         </div>
         {/* 3D Avatar */}
         <div className='m-10 float-center'>
-            <img src="images\casual-life-3d-female-doctor-at-desk.png" className='mx-auto w-lg'/>
+            <img src="images\casual-life-3d-female-doctor-at-desk.png" className='mx-auto w-lg drop-shadow-2xl'/>
         </div>
         {/* Messages */}
         <div className='mb-40'>

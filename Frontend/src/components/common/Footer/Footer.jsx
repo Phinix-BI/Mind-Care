@@ -33,8 +33,9 @@ function Component() {
           </div>
 
           <div>
-            <Footer.Title title="Social" className='font-extrabold text-xl'  style={{color:"black"}}/>
+            <Footer.Title title="Social" className='font-extrabold text-xl px-5'  style={{color:"black"}}/>
             <Footer.LinkGroup col className='text-lg flex-row gap-5'  style={{color:"black"}}>
+              <Footer.Link href="#"></Footer.Link>
               <Footer.Link href="#"><FaFacebook /></Footer.Link>
               <Footer.Link href="#"><FaInstagram/></Footer.Link>
               <Footer.Link href="#"><FaTwitter  /></Footer.Link>
