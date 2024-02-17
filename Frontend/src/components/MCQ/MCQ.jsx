@@ -22,6 +22,10 @@ const MCQ = () => {
     const [showPreview, setShowPreview] = useState(false);
     const [blurBG, setBlurBG] = useState(false);
 
+    const [disprev, setDisprev] = useState(false);
+    const [disnext, setDisnext] = useState(false);
+    const [dissubmit, setDissubmit] = useState(false);
+
     const localUserId = localStorage.getItem('token');
 
     //CALL POST API TO SAVE USER RESPONSE
@@ -49,12 +53,19 @@ const MCQ = () => {
         console.log('Submit button clicked');
         setShowPreview(true);
         setBlurBG(true);
+
+        setTimeout(() => {
+          setDisnext(true);
+          setDisprev(true);
+          setDissubmit(true);
+        }, 1000);
       }
       const handlePreview = () => {
         setShowPreview(false);
         setBlurBG(false);
       }
-      
+
+     
       useEffect(() => {
         const fetchData = async () => {
           try {
@@ -190,12 +201,12 @@ const MCQ = () => {
     </div>
     <div className={Styles.button}>
       {currentQuestion > 0 ? (
-        <button className={Styles.Prevbtn} onClick={handlePrev}><i><GrFormPreviousLink /></i> Prev</button>
+        <button className={Styles.Prevbtn}  onClick={!disprev ? handlePrev : null}> <i><GrFormPreviousLink /></i> Prev</button>
       ) : null}
       {currentQuestion === assessment.length - 1 ?
-        <button className={Styles.Nxtbtn} onClick={handleSubmit}>Submit <i><GrFormNextLink /></i></button>
+        <button className={Styles.Nxtbtn} onClick={!dissubmit ? handleSubmit : null} >Submit <i><GrFormNextLink /></i></button>
         :
-        <button className={Styles.Nxtbtn} onClick={handleNext}>Next <i><GrFormNextLink /></i></button>
+        <button className={Styles.Nxtbtn} onClick={!disnext ? handleNext : null}>Next <i><GrFormNextLink /></i></button>
       }
     </div>
     </div>
@@ -204,7 +215,7 @@ const MCQ = () => {
         <div className='absolute top-40 right-11.25' style={{ "right": 180, "top": 180 }}>
           <div onClick={handlePreview}><GiTireIronCross /></div>
         </div>
-        <div><Preview /></div>
+        <div><Preview/></div>
       </div>
     )}
   </div>

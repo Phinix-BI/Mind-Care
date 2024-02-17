@@ -5,26 +5,93 @@ import { IoMdMic } from "react-icons/io";
 const TypingBox = ({saveAiMessage,saveUserMessage , socket}) => {
 
   const [message, setMessage] = useState('');
+  const [recognition, setRecognition] = useState(null);
+  const [silenceTimer, setSilenceTimer] = useState(null);
+  const SILENCE_THRESHOLD = 5000; // 5 seconds
 
 
   const handelSend = async() => {
     socket.emit('userMessage', message);
     saveUserMessage(message);
+    setMessage('');
   }
 
-  useEffect(() => { 
+
+  const startSpeechRecognition = () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)(); // For Chrome
+    // const recognition = new SpeechRecognition(); // For other browsers
+
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[event.results.length - 1][0].transcript;
+      // setMessage((prevMessage) => prevMessage + transcript);
+      console.log(transcript);
+
+      resetSilenceTimer();
+    };
+
+    recognition.onend = () => {
+      // Restart recognition after it ends for continuous listening
+      if (recognition) {
+        recognition.start();
+      }
+    };
+
+    recognition.start();
+    setRecognition(recognition);
+  }
+
+  const stopSpeechRecognition = () => {
+    if (recognition) {
+      recognition.stop();
+      setRecognition(null);
+    }
+  }
+
+  const resetSilenceTimer = () => {
+    if (silenceTimer) {
+      clearTimeout(silenceTimer);
+    }
+
+    setSilenceTimer(setTimeout(() => {
+      if (transcript.trim() !== '') {
+        // Send the user's speech to AI after 5 seconds of silence
+        socket.emit('userMessage', message);
+        saveUserMessage(message);
+        setMessage('');
+      }
+    }, SILENCE_THRESHOLD));
+  }
+
+  const handelVoice = () => {
+    if (recognition) {
+      stopSpeechRecognition();
+    } else {
+      startSpeechRecognition();
+    }
+  }
+
+  useEffect(() => {
     socket.on('aiResponse', (message) => {
       console.log(message);
       saveAiMessage(message);
+    });
 
-    })
-  },[])
-
-  useEffect(() => {
     return () => {
       socket.off('aiResponse');
     }
-  },[])
+  }, [socket, saveAiMessage]);
+
+  useEffect(() => {
+    return () => {
+      if (silenceTimer) {
+        clearTimeout(silenceTimer);
+      }
+    }
+  }, [silenceTimer]);
+
 
   return (
     
@@ -33,7 +100,7 @@ const TypingBox = ({saveAiMessage,saveUserMessage , socket}) => {
         <div className='w-full bg-white max-w-screen-xl flex border-2 my-5 p-2 rounded-lg fixed bottom-0'>
             <input type="text" className='focus:ring-0 w-11/12 rounded-xl border-none' placeholder='Type a message' value={message} onChange={(e) => setMessage(e.target.value)} />
             <div className='flex justify-space'>
-              <i className='my-auto text-xl m-3 hover:bg-gray-200 p-3 rounded-lg'><IoMdMic /></i>
+                <i className='my-auto text-xl m-3 hover:bg-gray-200 p-3 rounded-lg' onClick={handelVoice}><IoMdMic /></i>
                 <i className='my-auto text-xl m-3 hover:bg-gray-200 p-3 rounded-lg' onClick={handelSend}><IoSendSharp /></i>
             </div>
         </div>

@@ -22,6 +22,11 @@ const Preview = () => {
     }
   };
 
+  const handelFinalSubmission = async() => {  
+    console.log('Final Submit button clicked');
+   
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -93,13 +98,34 @@ const Preview = () => {
           ) : (
             <p>Loading...</p>
           )}
+          {currentSlide === assessment.length - 1 && (
+            <button className="p-3 bg-blue-500 float-right text-white rounded-lg" onClick={handelFinalSubmission}>
+              Submit
+            </button>
+          )}
         </div>
-        <i className="absolute left-0 top-1/2 p-2" onClick={prevSlide}>
+
+        {(currentSlide === 0) ? (
+
+        <i className="absolute right-0 top-1/2 p-2" onClick={nextSlide}>
+          <GrNext />
+        </i>
+
+
+        ): (currentSlide === assessment.length - 1) ? (
+          <i className="absolute left-0 top-1/2 p-2" onClick={prevSlide}>
+          <GrPrevious />
+        </i>
+        ) : (
+          <>
+          <i className="absolute left-0 top-1/2 p-2" onClick={prevSlide}>
           <GrPrevious />
         </i>
         <i className="absolute right-0 top-1/2 p-2" onClick={nextSlide}>
           <GrNext />
         </i>
+          </>
+        )}
       </div>
     </div>
   );
