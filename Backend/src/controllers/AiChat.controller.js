@@ -20,12 +20,13 @@ export const chatWithAiController = async (usermessage,socket) => {
 
              const chunkText = chunk.text();
            
-              socket.emit('aiResponse',chunkText);
-
+              
                 text += chunkText;
 
             
         }
+        
+        socket.emit('aiResponse',text);
 
         return text;
         // console.log(text);

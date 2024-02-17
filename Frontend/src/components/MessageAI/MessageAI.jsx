@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MessageAI = () => {
+const MessageAI = ({message,AiTime}) => {
   return (
     <div className='flex w-full py-2 px-1'>
         {/* img */}
@@ -11,8 +11,8 @@ const MessageAI = () => {
         {/* Message */}
         <div className='bg-yellow-100 max-w-xl rounded-xl flex p-2'>
             <div className='flex'>
-              <p className='p-2'>Message Message</p>
-              <p className='relative -bottom-7 text-xs text-gray-500'>05:08</p>
+              <p className='p-2'>{message}</p>
+              <p className='relative -bottom-7 text-xs text-gray-500'>{AiTime}</p>
             </div>
         </div>
     </div>
