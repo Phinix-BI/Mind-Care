@@ -12,7 +12,7 @@ const MessageAI = ({message,AiTime}) => {
         <div className='bg-yellow-100 max-w-xl rounded-xl flex p-2'>
             <div className='flex'>
               <p className='p-2'>{message}</p>
-              <p className='relative -bottom-7 text-xs text-gray-500'>{AiTime}</p>
+              <p className='float bottom-5 text-xs text-gray-500'>{AiTime}</p>
             </div>
         </div>
     </div>

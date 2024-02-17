@@ -22,6 +22,7 @@ import MCQ from "./components/MCQ/MCQ"
 import DoctorsPage from "./components/DoctorsPage/DoctorsPage";
 import AccountSettings from "./components/AccountSettings/AccountSettings"
 import Chat from "./components/Chat/Chat"
+import CheckAppoinment from "./components/CheckAppoinment/CheckAppoinment";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: "/chat",
     element:<Chat/>,
+  },
+  {
+    path: "/appoinment",
+    element: <CheckAppoinment />
   }
  
 ]);
