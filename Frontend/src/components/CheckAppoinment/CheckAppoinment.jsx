@@ -3,7 +3,47 @@ import Appoinment from '../Appoinment/Appoinment'
 import Navbar from '../common/Navbar2.0/Navbar2.0'
 import Footer from '../common/Footer/Footer'
 import { IoMdMale, IoMdFemale } from "react-icons/io";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 const CheckAppoinment = () => {
+   
+    const [appointmentData, setAppointmentData] = useState([]);
+   
+    useEffect(() => {
+
+        const getAppoinment = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/dr/appointment/details',{
+                    params:{
+                        drToken:localStorage.getItem('token')
+                    }
+                });
+                
+               setAppointmentData (response.data.Found_data.appointmentDetails);
+                
+               
+            } catch (err) {
+                console.error(err.message);
+            }
+        }; 
+
+        // time interval is the temp solution for the real time data update.
+        // In future we will use socket.io for real time data update.
+
+        let timerId = setInterval(() => getAppoinment(), 500);
+
+        return () => {
+            clearInterval(timerId);
+        }
+        
+    }
+    ,[]);
+
+    useEffect(() => {
+        console.log(appointmentData);
+    });
+
   return (
     <>
     <Navbar />
@@ -13,39 +53,46 @@ const CheckAppoinment = () => {
             <div className='m-3'>
                 <h1 className='font-semibold text-2xl '>Pending Appoinments</h1>
                 <div>
-                    <Appoinment 
-                        Patientname={"John Doe"}
-                        years= {36}
-                        gender = {<IoMdMale />}
-                        session= {45}
-                        accepted= {false}
-                    />
-                    <Appoinment 
-                        Patientname={"Biswajit Dey"}
-                        years= {27}
-                        gender = {<IoMdFemale />}
-                        session= {30}
-                        accepted= {false}
-                    />
+                   { appointmentData.map((appointment, index) => {
+                        if (appointment.reqAccepted === false) {
+                            return (
+                                <Appoinment 
+                                    key={index}
+                                    Patientname={appointment.userDetails.fullName}
+                                    years={appointment.userDetails.age}
+                                    gender={appointment.userDetails.gender === 'male' ? <IoMdMale /> : <IoMdFemale />}
+                                    session={45}
+                                    pateintId={appointment.userId}
+                                    accepted={false}
+                                />
+                            );
+                        }
+                    })
+                    }
+                            
+                        
                 </div>
             </div>
             <div className='m-3'>
                 <h1 className='font-semibold text-2xl '>Accepted Appoinments</h1>
                 <div>
-                    <Appoinment 
-                        Patientname={"John Doe"}
-                        years= {36}
-                        gender = {<IoMdMale />}
-                        session= {45}
-                        accepted= {true}
-                    />
-                    <Appoinment 
-                        Patientname={"Biswajit Dey"}
-                        years= {27}
-                        gender = {<IoMdFemale />}
-                        session= {30}
-                        accepted={true}
-                    />
+                { appointmentData.map((appointment, index) => {
+                        if (appointment.reqAccepted === true) {
+                            return (
+                                <Appoinment 
+                                    key={index}
+                                    Patientname={appointment.userDetails.fullName}
+                                    years={appointment.userDetails.age}
+                                    gender={appointment.userDetails.gender === 'male' ? <IoMdMale /> : <IoMdFemale />}
+                                    session={45}
+                                    pateintId={appointment.userId}
+                                    accepted={true}
+                                />
+                            );
+                        }
+                    })
+                    }
+                            
                 </div>
             </div>
         </div>

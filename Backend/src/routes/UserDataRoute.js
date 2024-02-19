@@ -1,12 +1,14 @@
 import express from 'express';  // Import express
 
-import {getUserData,PostUserData,UpdateUserData,DeleteUserData} from '../controllers/UserDataController.js'; // Import UserDataController.js functions
+import {getUserData,getDoctorsData,PostUserData,UpdateUserData,DeleteUserData} from '../controllers/UserDataController.js'; // Import UserDataController.js functions
 
 import { UserAuth } from '../middlewares/Authentication/UserAuth.js';
 
 const router = express.Router();
 
-router.get('/user/profile/:id',getUserData);
+router.get('/user/profile',getUserData);
+
+router.get('/doctors/profile',getDoctorsData);
 
 router.post('/user/profile',PostUserData);
 

@@ -22,6 +22,10 @@ const AccountSettings = ({onUpdate}) => {
     const [image, setImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [imageUrl, setImageUrl] = useState('images/1.jpg');
+    const [address, setAddress] = useState('');
+    const [specialization, setSpecialization] = useState('');
+    const [about, setAbout] = useState('');
+    const [role, setRole] = useState('Patient');
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -33,11 +37,14 @@ const AccountSettings = ({onUpdate}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user/profile/:id', {
+                const response = await axios.get('http://localhost:3000/user/profile', {
                     headers: {
                         'x-auth-token': localStorage.getItem('token'),
                     },
                 });
+
+                const role = response.data.role;
+                setRole(role);
                 const { firstName, lastName, phone, email, age, gender } = response.data;
                 setFirstName(firstName);
                 setLastName(lastName);
@@ -46,6 +53,11 @@ const AccountSettings = ({onUpdate}) => {
                 setEmail(email);
                 setAge(age);
                 setGender(gender);
+                // setImageUrl(response.data.profilePic);
+                setAddress(response.data.address);
+                setSpecialization(response.data.specialization);
+                setAbout(response.data.about);
+
             } catch (error) {
                 console.log(error);
                 toast.error('An error occurred while fetching profile data.');
@@ -80,6 +92,9 @@ const AccountSettings = ({onUpdate}) => {
             formData.append('email', email);
             formData.append('age', age);
             formData.append('gender', gender);
+            formData.append('address', address);
+            formData.append('specialization', specialization);
+            formData.append('about', about);
             if (image) {
                 formData.append('image', image);
             }
@@ -163,8 +178,6 @@ const AccountSettings = ({onUpdate}) => {
                         </div>
                     </div>
 
-
-
                     <div className='m-5'>
                         <div className='flex flex-col'>
                             <label htmlFor='name' className="text-gray-800">Email Address : </label>
@@ -172,6 +185,45 @@ const AccountSettings = ({onUpdate}) => {
                         </div>
                         <div className='text-end text-blue-400 mx-5'><a>Change</a></div>
                     </div>
+
+                {role === 'Doctor' ? ( 
+                    <>
+                    <div className='m-5'>
+                             <div className='flex flex-col'>
+                                <label htmlFor='name' className="text-gray-800">Phone : </label>
+                                <input type='text' placeholder='Eg.- 8048752050' value={phone} onChange={(e) => setPhone(e.target.value)} className="mt-1 p-2 border border-gray-300 rounded-md" />
+                            </div>
+                            <div className='text-end text-blue-400 mx-5'><a>Change</a></div>
+                        </div>
+
+
+                        <div className='m-5'>
+                             <div className='flex flex-col'>
+                                <label htmlFor='name' className="text-gray-800">Specialization : </label>
+                                <input type='text' placeholder='Eg.- Mentalist , M.B.B.S' value={specialization} onChange={(e) => setSpecialization(e.target.value)} className="mt-1 p-2 border border-gray-300 rounded-md" />
+                            </div>
+                            <div className='text-end text-blue-400 mx-5'><a>Change</a></div>
+                        </div>
+
+                        <div className='m-5'>
+                              <div className='flex flex-col'>
+                                    <label htmlFor='name' className="text-gray-800">Address : </label>
+                                    <input type='text' placeholder='Eg.- New York City, USA' value={address} onChange={(e) => setAddress(e.target.value)} className="mt-1 p-2 border border-gray-300 rounded-md" />
+                                </div>
+                                 <div className='text-end text-blue-400 mx-5'><a>Change</a></div>
+                        </div>
+                    </>
+                ): null}
+
+
+                    <div className='m-5'>
+                        <div className='flex flex-col'>
+                            <label htmlFor='name' className="text-gray-800">About : </label>
+                            <textarea placeholder='Eg.- Share your thoughts and feelings...' value={about} onChange={(e) => setAbout(e.target.value)} className="mt-1 p-2 border border-gray-300 rounded-md" />
+                        </div>
+                        <div className='text-end text-blue-400 mx-5'><a>Change</a></div>
+                    </div>
+
 
                     <div className='m-5'>
                         <a className='text-red-500'>Delete Your Account</a>
@@ -188,7 +240,7 @@ const AccountSettings = ({onUpdate}) => {
                 <div className='p-8 m-6 s:w-1/2'>
 
                 <form>
-               <label for="image-upload">
+               <label htmlFor="image-upload">
                 {previewImage ? (
                   <img className='size-32 mx-auto rounded-full avtar-preview'  src={previewImage} alt='Profile Picture' />  
                 ):(
@@ -197,7 +249,7 @@ const AccountSettings = ({onUpdate}) => {
             </label>
                 <input type="file" id="image-upload" accept="image/*" hidden onChange={handleImageChange}/>
 
-                <label for="image-upload" className='bg-blue-400 px-6 py-2 rounded mt-4 inline-block '>Change</label>
+                <label htmlFor="image-upload" className='bg-blue-400 px-6 py-2 rounded mt-4 inline-block '>Change</label>
                
                  </form>
                 

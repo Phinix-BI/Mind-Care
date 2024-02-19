@@ -69,7 +69,7 @@ export const UpdateUserData = async (req, res) => {
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
         const userId = decoded.id;
     
-        const {firstName,lastName,phone, email, age, gender } = req.body;
+        const {firstName,lastName, email, age, gender,phone,address,about,specialization,reqStatus } = req.body;
         
         // const firstName = fullName.split(" ")[0];
         // const lastName = fullName.split(" ")[1];
@@ -77,17 +77,25 @@ export const UpdateUserData = async (req, res) => {
             firstName,
             lastName,
             email,
-            phone,
             age,
+            phone : phone || null,
             gender,
+            about,
+            address,
+            reqStatus,
+            specialization
         };
+
+        console.log("req:  " ,reqStatus);
+
+        
     
         const findUser = await UserDataModel.findById(userId);
     
         if (!findUser) {
             return res.status(404).json({ message: "User not found" });
         }
-    
+  
         const requestData = { ...userData };
     
         if (req.file) {
@@ -95,24 +103,26 @@ export const UpdateUserData = async (req, res) => {
         }
     
         const options = { new: true };
-        const prevEmail = findUser.email;
-        const prevPhone = findUser.phone;
 
 
-        if (email != prevEmail) {
+        // const prevEmail = findUser.email;
+        // const prevPhone = findUser.phone;
 
-            const existingEmail = await UserDataModel.findOne({ email }); 
+
+        // if (email != prevEmail) {
+
+        //     const existingEmail = await UserDataModel.findOne({ email }); 
     
-            if (existingEmail) {
-                return res.status(400).json({ message: "Email already exists" });
-            }
-        }else if(phone != prevPhone){
-            const existingPhone = await UserDataModel.findOne({ phone });
+        //     if (existingEmail) {
+        //         return res.status(400).json({ message: "Email already exists" });
+        //     }
+        // }else if(phone != prevPhone){
+        //     const existingPhone = await UserDataModel.findOne({ phone });
     
-            if (existingPhone) {
-                return res.status(400).json({ message: "Phone already exists" });
-            }
-        }
+        //     if (existingPhone) {
+        //         return res.status(400).json({ message: "Phone already exists" });
+        //     }
+        // }
     
         try {
             const updatedUserData = await UserDataModel.findByIdAndUpdate(
@@ -122,6 +132,7 @@ export const UpdateUserData = async (req, res) => {
             );
             res.status(200).json(updatedUserData);
         } catch (error) {
+            console.log(error);
             res.status(500).json({ message: error.message });
         }
 };
@@ -138,4 +149,13 @@ export const DeleteUserData = async (req, res) => {
         res.status(404).json({ message: error.message });
     } 
 
+}
+
+export const getDoctorsData = async (req, res) => {
+    try {
+        const doctorsData = await UserDataModel.find({role: "Doctor"});
+        res.status(200).json(doctorsData);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 }

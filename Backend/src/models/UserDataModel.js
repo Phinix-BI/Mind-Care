@@ -26,11 +26,26 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     phone: {
-        type: Number,
+        type: String,
     },
     profilePic: {
         type: String,
     },
+    
+    address: {
+        type: String,
+    },
+    specialization: {
+        type: String,
+    },
+    about: {
+        type: String,
+    },
+    reqStatus: {
+        type: Boolean,
+        default: false
+    },
+    
     createdAt: {
         type: Date,
         default: Date.now

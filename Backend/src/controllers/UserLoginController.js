@@ -24,7 +24,7 @@ export const PostUserLogin = async (req, res) => {
         }
 
       
-            const token = jwt.sign({ id: findUser._id },process.env.TOKEN_SECRET,{ expiresIn: '2h' });
+            const token = jwt.sign({ id: findUser._id },process.env.TOKEN_SECRET,{ expiresIn: '168h' });
            
             findUser.token = token;
             await findUser.save();
@@ -58,7 +58,7 @@ export const forgotPassword = async (req, res) => {
         const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false });
 
         const otpExpire = new Date();
-        otpExpire.setMinutes(otpExpire.getMinutes() + 1);
+        otpExpire.setMinutes(otpExpire.getMinutes() + 10);
 
         const response = await UserDataModel.updateOne({ email: email }, { otp: otp, otpExpire: otpExpire });
 

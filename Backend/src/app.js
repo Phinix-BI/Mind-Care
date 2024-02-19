@@ -53,7 +53,9 @@ app.get('/', (req, res) => {
 
 // user profile routes
 
-app.get('/user/profile/:id',UserDataRoute);
+app.get('/user/profile',UserDataRoute);
+
+app.get('/doctors/profile',UserDataRoute);
 
 app.post('/user/profile',UserDataRoute);
 

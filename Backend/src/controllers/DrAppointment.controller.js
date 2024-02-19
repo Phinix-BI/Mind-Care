@@ -1,11 +1,14 @@
 import mongoose from "mongoose";
 import DrAppointmentModel from "../models/DrAppointmentModel.js";
-
+import jwt from "jsonwebtoken";
 
 //to save user app. req.
 export const saveRequest = async (req, res) => {
 
-    const { drId, userId, userDetails } = req.body;
+    const { drId, patientId, userDetails } = req.body;
+
+    const userId = jwt.verify(patientId, process.env.TOKEN_SECRET).id.toString();
+    
 
     if (!drId || !userDetails || !userId) { return res.status(400).json("req body data is missing") };
 
@@ -74,8 +77,10 @@ export const saveRequest = async (req, res) => {
 //to save dr accept status
 export const saveAcceptStatus = async (req, res) => {
 
-    const { drId, userId, reqAccepted } = req.body;
+    const { drToken, userId, reqAccepted } = req.body;
 
+    const drId = jwt.verify(drToken, process.env.TOKEN_SECRET).id.toString();
+    
     if (!drId || !userId || !reqAccepted) { return res.status(400).json("Request body data missing") }
 
     if(reqAccepted === "false") { return res.status(400).json("False is default. Only sent true.") }
@@ -127,7 +132,11 @@ export const saveAcceptStatus = async (req, res) => {
 //to get user requests 
 export const getAppointmentDetails = async (req, res) => {
 
-    const { drId, userId } = req.body;
+    const { userId } = req.body;
+    const drToken = req.query;
+    // console.log("drToken",drToken)
+    const drId = jwt.verify(drToken.drToken, process.env.TOKEN_SECRET).id.toString();
+    // console.log("drId",drId)
 
     if (!drId) { return res.status(400).json("req body data missing") }
 
@@ -144,15 +153,15 @@ export const getAppointmentDetails = async (req, res) => {
 
         if(!response){
 
-            console.log("No data found",response)
+            // console.log("No data found",response)
 
             return res.status(404).json({"No data found":response});
             
         } else {
 
-            console.log("Found data",response)
+            // console.log("Found data",response)
 
-            return res.status(404).json({"Found data":response});
+            return res.status(201).json({"Found_data":response});
 
         }
     }
@@ -197,7 +206,11 @@ export const getAppointmentDetails = async (req, res) => {
 //case1: dr chckup done 
 export const deleteAppointmentDetails = async (req, res) => {
 
-    const { drId, userId } = req.body;
+    const { drToken, patientId } = req.query;
+
+    const userId = patientId;
+
+    const drId = jwt.verify(drToken, process.env.TOKEN_SECRET).id.toString();
 
     if (!drId || !userId) { return res.status(400).json("req body data missing") }
 

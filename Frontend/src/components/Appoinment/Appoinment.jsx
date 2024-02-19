@@ -1,8 +1,54 @@
-import React from 'react'
+import {React,useState,useEffect} from 'react'
 import { RxCross2 } from "react-icons/rx";
 import { MdOutlineDone } from "react-icons/md";
 import Footer from '../common/Footer/Footer'
+import axios from 'axios';
+
 const Appoinment = (props) => {
+    const [isDeleted, setIsDeleted] = useState(false);
+    const [accepted, setAccepted] = useState(false);
+    
+    const handelCross = async () => {
+        try {
+            const response = await axios.delete('http://localhost:3000/dr/appointment/delete',
+           
+            {
+                params:{
+                    drToken:localStorage.getItem('token'),
+                    patientId:props.pateintId,
+                } 
+            });
+            
+            setIsDeleted(true);
+            setAccepted(true);
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+   
+    const handelDone = async () => {
+        try{
+            const response = await axios.put('http://localhost:3000/dr/req/acceptstatus',{
+                drToken:localStorage.getItem('token'),
+                userId:props.pateintId,
+                reqAccepted:true
+            });
+        setAccepted(true);
+        setIsDeleted(true);
+        }catch(err){
+            console.error(err.message);
+        }
+        
+    }
+
+    if(isDeleted){
+        return null;
+    }
+    if(accepted){
+        return null;
+    }
+
+
   return (
     <>
         <ul className='flex w-full justify-between'>
@@ -20,16 +66,16 @@ const Appoinment = (props) => {
             <div className='flex justify-end'>
                 {!props.accepted ? (
                     <>
-                        <li className='p-2 my-auto m-2 text-2xl hover:shadow-lg hover:bg-red-300 rounded-lg'>
+                        <li className='p-2 my-auto m-2 text-2xl hover:shadow-lg hover:bg-red-300 rounded-lg' onClick={handelCross}>
                             <RxCross2 />
                         </li>
-                        <li className='p-2 my-auto m-2 text-2xl hover:shadow-lg hover:bg-green-300 rounded-lg'>
+                        <li className='p-2 my-auto m-2 text-2xl hover:shadow-lg hover:bg-green-300 rounded-lg' onClick={handelDone}>
                         <MdOutlineDone />
                         </li>
                 
                     </>
-                ): <button className="p-2 my-auto h-10 font-semibold rounded-lg bg-gray-300" type="submit">
-                    Accepted
+                ): <button className="p-2 my-auto h-10 font-semibold rounded-lg bg-gray-300" type="submit" onClick={handelCross}>
+                    CheckUp Done
                 </button>}
             </div>
         </ul>
