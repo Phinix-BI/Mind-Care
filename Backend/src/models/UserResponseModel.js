@@ -20,7 +20,7 @@ const nestedAsessmentSchema = mongoose.Schema({
 })
 
 const SingleUserResponseSchema = mongoose.Schema({
-    // _id : String,
+
     userId : {
         type:String,
         required : true
