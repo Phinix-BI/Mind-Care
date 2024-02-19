@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema({
     otpExpire: {
         type: Date,
     },
-    
+    drAppointmentId : [String]
 });
 
 const User = mongoose.model('User', userSchema);

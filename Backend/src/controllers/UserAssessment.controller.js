@@ -28,7 +28,7 @@ export const getuserResponse = async (req, res) => {
 export const saveUserResponse = async (req, res) => {
     try {
 
-        const { token, userRes, QuestionName } = req.body;
+        const { token, userRes, QuestionName, finalSubmit } = req.body;
         
         const userId = jwt.verify(token, process.env.TOKEN_SECRET).id;
         console.log("User response:", userId);
@@ -61,27 +61,30 @@ export const saveUserResponse = async (req, res) => {
 
         if (!existingUserResponse) {
             // console.log("User not found, creating new user");
-            const newUserResponse = await UserResponse.insertMany([{ userId: userId }]
-
-                // AllAssessments: [{ complete: false, assessments: [assessment] }]
-            );
+            const newUserResponse = await UserResponse.insertMany([{ userId: userId }]);
             
             const updatedUserResponse = await UserResponse.updateMany({ userId }, {
                 $push: {
                     AllAssessments: { assessments: assessment }
                 }
             });
-            console.log("New user response:", updatedUserResponse);
-            // await newUserResponse.save();
-            return res.status(201).json({ "msg": "User created and first data pushed" });
+
+        console.log("New user response:", updatedUserResponse);
+
+        return res.status(201).json({ "msg": "User created and first data pushed" });
+
         }
 
         const lastAssessment = existingUserResponse.AllAssessments.slice(-1)[0];
 
-        if (lastAssessment.complete || lastAssessment.assessments.length >= TOTAL_QUESTIONS) {
+        if (lastAssessment.complete && lastAssessment.assessments.length >= TOTAL_QUESTIONS) {
+
             existingUserResponse.AllAssessments.push({ complete: false, assessments: [assessment] });
+
         } else {
+
             let flag = 1;
+
             //update the ans
             for (let ob of lastAssessment.assessments){
                     if(ob.q === assessment.q){
@@ -90,15 +93,19 @@ export const saveUserResponse = async (req, res) => {
                         break;
                     }
             }
+
             if(flag){
             lastAssessment.assessments.push(assessment);
             }
 
-            if (lastAssessment.assessments.length >= TOTAL_QUESTIONS) {
+            if (lastAssessment.assessments.length >= TOTAL_QUESTIONS && finalSubmit) {
                 lastAssessment.complete = true;
             }
+
         }
+
         await existingUserResponse.save();
+        
         console.log("Data saved successfully", matchResult);
         res.status(200).json({ "msg": "Data saved successfully", matchResult });
 
@@ -117,50 +124,3 @@ function findClosestMatch(userText, backendOptions) {
 }
 
 
-//PATCH
-export const updateUserResponse = async (req, res) => {
-
-    //extract data and validate
-    // const { userId } = req.params
-    // const { qNo, a } = req.body
-    // if (!userId || !qNo || !a) {
-    //     return res.status(400).json({ "message": "All field is required" })
-    // }
-
-    // try {
-    //     await UserResponse.findOne({ userId: userId })
-    //         .then(async (result) => {
-    //             let storedData = result
-    //             let index = storedData.AllAssessments.length - 1
-    //             let lastAssessments = storedData.AllAssessments[index]
-    //             let updateDocument = lastAssessments.assessments[qNo - 1]
-    //             console.log(updateDocument)
-    //             //updating
-    //             updateDocument.a = a
-
-    //             console.log(updateDocument)
-
-    //             await storedData.save()
-    //                 .then((result) => {
-    //                     console.log("Data updated successfully:", result)
-    //                     res.status(200).json({ "message": "Success" })
-    //                 })
-    //                 .catch((error) => {
-    //                     console.log("error to update data:", error);
-    //                     res.status(500).json({ "message": error })
-    //                 })
-
-    //         })
-    //         .catch(error => {
-    //             console.log("UserId not found", error)
-    //             res.status(400).json({ "message": error })
-    //         })
-    // } catch (error) {
-    //     console.log(" error", error)
-    //     res.status(500).json({ "message": error })
-
-    // }
-}
-
-// connectDB()
-// saveUserResponse()

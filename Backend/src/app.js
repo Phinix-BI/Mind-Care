@@ -63,6 +63,10 @@ app.patch('/user/profile/:id',UserDataRoute);
 
 app.delete('/user/profile/:id',UserDataRoute);
 
+app.put('/user/dr/id/save',UserDataRoute);
+
+app.delete('/user/dr/id/delete',UserDataRoute);
+
 // user login routes
 
 app.post('/user/login',UserLoginRoute);
@@ -86,7 +90,6 @@ app.post('/user/userAssessment/save',userAssessmentRouter);
 
 app.get("/user/userAssessment/question",userAssessmentRouter );
 
-app.patch('/user/userAssessment', userAssessmentRouter);
 
 
 //Admin CRUD

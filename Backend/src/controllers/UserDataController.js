@@ -159,3 +159,62 @@ export const getDoctorsData = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
+
+export const saveDrAppointmentId = async (req, res) => {
+
+    const {userId, drId} = req.body;
+
+    if(!userId || !drId) { res.status(400).json("Req body data not found") };
+
+    try {
+        const response = await UserDataModel.findOneAndUpdate(
+           // search criteria
+            {userId : userId},
+
+            //update
+            {$push:{ drAppointmentId : drId }},
+
+            {returnDocument:"after"}
+        )
+
+        console.log("Dr id addedd: ",response);
+        res.status(200).json({"Dr id addedd":response})
+
+    } catch (error) {
+
+        console.log(error)
+
+    }
+}
+
+
+export const deleteDrAppointmentId = async (req, res) => {
+
+    const {userId, drId} = req.body;
+
+    if(!userId || !drId) { res.status(400).json("Req body data not found") };
+
+    try {
+         
+        const response = await UserDataModel.findOneAndUpdate(
+            // search criteria
+             {userId : userId , drAppointmentId : drId},
+
+             //update
+             {$pull:{ drAppointmentId : drId }},
+
+             {returnDocument:"after"}
+  
+         )
+
+        console.log("Dr id deleted: ",response);
+        res.status(200).json({"Dr id addedd":response})
+
+    } catch (error) {
+
+        console.log(error)
+
+    }
+}
+
