@@ -12,9 +12,13 @@ const HomePage = () => {
    <>
     <Navbar />
     <HeroSection />
-    <Link to="/diagnos"><CTA /></Link>
+    <CTA titleUpper = {"Begin Your Path "} titleLower = {"to Mental Wellness"} content={"Explore resources and support for a healthier mind. Take our personalized mental health assessment to gain insights and begin your wellness journey today."} 
+    link = "/DiagnosTest"
+    />
     <Features />
-    <CTA />
+    <CTA titleUpper = {"Your Virtual Support  "} titleLower = {"Companion"} content={"Connect with our AI Therapists for confidential, 24/7 support. Whether it's day or night, our virtual companions are here to listen, provide guidance, and help you navigate your mental health journey"} 
+    link = "/chat"
+    />
     
     <Testimonial />
 

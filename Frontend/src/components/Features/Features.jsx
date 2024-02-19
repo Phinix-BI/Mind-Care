@@ -1,44 +1,44 @@
-import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline'
+import {  CalendarDaysIcon, ChatBubbleLeftRightIcon,ClockIcon ,ClipboardDocumentCheckIcon} from '@heroicons/react/24/outline'
 
 const features = [
   {
-    name: 'Push to deploy',
+    name: 'Mental Health Assessment',
     description:
-      'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.',
-    icon: CloudArrowUpIcon,
+      'Quickly gain insights into your well-being with our confidential assessment. Answer tailored questions for personalized support and self-discovery.',
+    icon: ClipboardDocumentCheckIcon,
   },
   {
-    name: 'SSL certificates',
+    name: '1:1 Chat with AI Therapist',
     description:
-      'Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.',
-    icon: LockClosedIcon,
+      'Connect confidentially 24/7 with our AI therapy chat. Receive immediate support, coping strategies, and a virtual listening ear.',
+    icon: ChatBubbleLeftRightIcon,
   },
   {
-    name: 'Simple queues',
+    name: 'Appointments Booking',
     description:
-      'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
-    icon: ArrowPathIcon,
+      'Take control of your well-being. Easily schedule virtual sessions with licensed professionals for a hassle-free and confidential experience.',
+    icon: CalendarDaysIcon,
   },
   {
-    name: 'Advanced security',
+    name: '24/7 AI Therapist ',
     description:
-      'Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.',
-    icon: FingerPrintIcon,
+      'Access support anytime with our round-the-clock AI therapist. Prioritize your mental health with immediate guidance and companionship.',
+    icon: ClockIcon,
   },
 ]
 
 export default function Example() {
   return (
+    <section id="features">
     <div className="bg-white py-24 sm:py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-indigo-600">Deploy faster</h2>
+          <h2 className="text-base font-semibold leading-7 text-indigo-600">Our Features</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Everything you need to deploy your app
+          Unlocking Wellbeing Excellence
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
-            pulvinar et feugiat blandit at. In mi viverra elit nunc.
+          Instantly access personalized insights and support. Seamlessly integrate features like mental health assessment, AI therapist chat and more.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -58,5 +58,6 @@ export default function Example() {
         </div>
       </div>
     </div>
+    </section>
   )
 }
