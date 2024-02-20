@@ -91,8 +91,36 @@ const DoctorsCard = (prompt) => {
 
             setRequest(true);
 
+            try{
+              const response = await axios.put('http://localhost:3000/user/dr/id/save',
+              {
+                drId: prompt.drId,
+                patientId: localStorage.getItem('token'),
+              }
+              );
+            }catch(error){
+              console.error('Error saving drId:', error);
+            }
           }
           
+      }
+
+      const withdrawRequest = async() => {
+
+        const response = await axios.delete('http://localhost:3000/user/dr/id/delete',
+        {
+          
+          params: {
+            drId: prompt.drId,
+            patientId: localStorage.getItem('token'),
+          }
+           
+        }
+        );
+
+        if(response.status === 200){
+          setRequest(false);
+        }
       }
 
   return ( 
@@ -136,12 +164,12 @@ const DoctorsCard = (prompt) => {
         <p>{prompt.doctorsEmail}</p>
 
         <div className="flex justify-center mt-4">
-        {request ? 
-        <button className="w-full p-2 font-semibold rounded-md bg-grey-500 text-black-100" type="submit" disabled>Request Sent</button>
-        : 
+        {request || prompt.reqStatus ? 
+        <button className="w-full p-2 font-semibold rounded-md bg-grey-500 text-black-100" type="submit" onClick={withdrawRequest}>Withdraw Request</button>
+        : !prompt.reqStatus?
         <button className="w-full p-2 font-semibold rounded-md bg-black text-white" onClick={handelAppointmentClick} type="submit">
             Book Appointment
-        </button>}
+        </button> : null}
           {/* <button className="w-full p-2 font-semibold rounded-md bg-black text-white" onClick={handelAppointmentClick} type="submit">
             Book Appointment
           </button> */}

@@ -163,17 +163,22 @@ export const getDoctorsData = async (req, res) => {
 
 export const saveDrAppointmentId = async (req, res) => {
 
-    const {userId, drId} = req.body;
+    const {patientId, drId} = req.body;
+   
+
+    const userId = jwt.verify(patientId, process.env.TOKEN_SECRET).id;
+
+    console.log("userId: ",userId);
 
     if(!userId || !drId) { res.status(400).json("Req body data not found") };
 
     try {
         const response = await UserDataModel.findOneAndUpdate(
            // search criteria
-            {userId : userId},
+            {_id : userId},
 
             //update
-            {$push:{ drAppointmentId : drId }},
+            {$push:{ drAppointmentId : drId.toString() }},
 
             {returnDocument:"after"}
         )
@@ -191,7 +196,9 @@ export const saveDrAppointmentId = async (req, res) => {
 
 export const deleteDrAppointmentId = async (req, res) => {
 
-    const {userId, drId} = req.body;
+    const {patientId, drId} = req.query;
+
+    const userId = jwt.verify(patientId, process.env.TOKEN_SECRET).id;
 
     if(!userId || !drId) { res.status(400).json("Req body data not found") };
 
@@ -199,7 +206,7 @@ export const deleteDrAppointmentId = async (req, res) => {
          
         const response = await UserDataModel.findOneAndUpdate(
             // search criteria
-             {userId : userId , drAppointmentId : drId},
+             {_id : userId , drAppointmentId : drId},
 
              //update
              {$pull:{ drAppointmentId : drId }},

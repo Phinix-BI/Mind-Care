@@ -25,6 +25,19 @@ const Appoinment = (props) => {
             console.error(err.message);
         }
     }
+
+    const withdrawRequest = async() => {
+
+        const response = await axios.delete('http://localhost:3000/user/dr/id/delete',
+        {
+            params:{
+                drToken:localStorage.getItem('token'),
+                patientId:props.pateintId,
+            } 
+        }
+        );
+
+      }
    
     const handelDone = async () => {
         try{
@@ -66,7 +79,7 @@ const Appoinment = (props) => {
             <div className='flex justify-end'>
                 {!props.accepted ? (
                     <>
-                        <li className='p-2 my-auto m-2 text-2xl hover:shadow-lg hover:bg-red-300 rounded-lg' onClick={handelCross}>
+                        <li className='p-2 my-auto m-2 text-2xl hover:shadow-lg hover:bg-red-300 rounded-lg' onClick={{handelCross,withdrawRequest}}>
                             <RxCross2 />
                         </li>
                         <li className='p-2 my-auto m-2 text-2xl hover:shadow-lg hover:bg-green-300 rounded-lg' onClick={handelDone}>
@@ -74,7 +87,7 @@ const Appoinment = (props) => {
                         </li>
                 
                     </>
-                ): <button className="p-2 my-auto h-10 font-semibold rounded-lg bg-gray-300" type="submit" onClick={handelCross}>
+                ): <button className="p-2 my-auto h-10 font-semibold rounded-lg bg-gray-300" type="submit" onClick={{handelCross,withdrawRequest}}>
                     CheckUp Done
                 </button>}
             </div>
