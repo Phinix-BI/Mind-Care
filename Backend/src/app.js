@@ -90,6 +90,8 @@ app.post('/user/userAssessment/save',userAssessmentRouter);
 
 app.get("/user/userAssessment/question",userAssessmentRouter );
 
+app.post('/user/userAssessment/submit',userAssessmentRouter);
+
 
 
 //Admin CRUD

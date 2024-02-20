@@ -115,6 +115,43 @@ export const saveUserResponse = async (req, res) => {
     }
 };
 
+// Add this function to your existing controller file
+export const updateCompleteStatus = async (req, res) => {
+    try {
+        const { token, finalSubmit } = req.body;
+
+        if (!token) {
+            return res.status(400).json({ "msg": "Token is required" });
+        }
+
+        const userId = jwt.verify(token, process.env.TOKEN_SECRET).id;
+
+        if (!userId) {
+            return res.status(400).json({ "msg": "UserId is required" });
+        }
+
+        const existingUserResponse = await UserResponse.findOne({ userId });
+
+        if (!existingUserResponse) {
+            return res.status(404).json({ "msg": "User not found" });
+        }
+
+        const lastAssessment = existingUserResponse.AllAssessments.slice(-1)[0];
+
+        if (lastAssessment.assessments.length >= TOTAL_QUESTIONS && finalSubmit) {
+            lastAssessment.complete = true;
+            await existingUserResponse.save();
+            return res.status(200).json({ "msg": "Complete status updated successfully" });
+        } else {
+            return res.status(400).json({ "msg": "Unable to update complete status" });
+        }
+    } catch (error) {
+        console.error("Error while updating complete status:", error);
+        res.status(500).json({ "error": "Internal server error" });
+    }
+};
+
+
 function findClosestMatch(userText, backendOptions) {
     const ratings = backendOptions.map((option) =>
         stringSimilarity.compareTwoStrings(userText, option)
