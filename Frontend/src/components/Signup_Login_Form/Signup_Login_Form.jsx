@@ -311,10 +311,9 @@ const Signup_Login_Form = () => {
         <div className={`panel left-panel ${isSignUpMode ? 'hidden' : ''}`}>
           <div className="content">
             <h3>New here ?</h3>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-              ex ratione. Aliquid!
-            </p>
+             <p>
+                Join Mindcare for personalized assessments, 24/7 AI therapy, and seamless appointment booking. Start your wellness journey now.
+              </p>
             <button className="btn1 transparent" onClick={handleSignUpClick}>
               Sign up
             </button>
@@ -327,9 +326,7 @@ const Signup_Login_Form = () => {
           <div className="content">
             <h2>One of us ?</h2>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-              laboriosam ad deleniti.
-            </p>
+            Welcome back! Sign in to continue your Mindcare journey towards mental well-being.</p>
             <button className="btn1 transparent" onClick={handleSignInClick}>
               Sign in
             </button>

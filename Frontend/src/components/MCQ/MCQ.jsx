@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Styles from './MCQ.module.css'
-// import  Diagnose_Question from '../dummydata';
-
-// import questions from '../../questions'; 
+import Styles from './MCQ.module.css';
 import { GrFormPreviousLink } from "react-icons/gr";
 import { GrFormNextLink } from "react-icons/gr";
 import { GiTireIronCross } from "react-icons/gi";
 import Preview from '../Preview/Preview';
-// import { set } from 'mongoose';
 import axios from 'axios';
-// import { set } from 'mongoose';
-// import Question from '../../../../Backend/src/models/QuestionModel';
+
 const MCQ = () => {
     
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -63,9 +58,12 @@ const MCQ = () => {
       const handlePreview = () => {
         setShowPreview(false);
         setBlurBG(false);
+        setDisnext(false);
+        setDisprev(false);
+        setDissubmit(false);
       }
 
-     
+
       useEffect(() => {
         const fetchData = async () => {
           try {
@@ -83,8 +81,15 @@ const MCQ = () => {
     
         fetchData();
       },[])
-      
-      
+
+      const handelOptionCLick = async (userText) => {
+        try{
+        const response = await axios.post("http://localhost:3000/user/userAssessment/save",
+        {userRes : userText, QuestionName:currentQuestionData.QuestionText , token:localUserId})
+        }catch(err){
+          console.log(err);
+        }
+      }
       
       if (assessment.length === 0) {
         return <h1>Loading.......</h1>;
@@ -155,10 +160,7 @@ const MCQ = () => {
       
       }
       enableVoiceRecognition();
-      
-      // const handleMatching = (e) => {
-      
-      // }
+     
 
     
   return (
@@ -191,7 +193,8 @@ const MCQ = () => {
             <button
               type="button"
               className={`text-purple-700 hover:text-black border focus:ring-4 focus:outline-none focus:ring-purple-300 ${(matchIndex - 1) === optionIndex ? 'border-purple-700 ' : ''} ${(clickedOption === optionIndex) ? 'border-purple-700 ' : ''} font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2`}
-              onClick={() => setClickedOption(optionIndex)}
+              onClick={() => {setClickedOption(optionIndex) 
+                handelOptionCLick(option)} }
             >
               <label>{`${String.fromCharCode(97 + optionIndex)}. ${option}`}</label>
             </button>
@@ -215,7 +218,7 @@ const MCQ = () => {
         <div className='absolute top-40 right-11.25' style={{ "right": 180, "top": 180 }}>
           <div onClick={handlePreview}><GiTireIronCross /></div>
         </div>
-        <div><Preview/></div>
+        <div><Preview userToken = {localUserId}/></div>
       </div>
     )}
   </div>
