@@ -23,6 +23,7 @@ import DoctorsPage from "./components/DoctorsPage/DoctorsPage";
 import AccountSettings from "./components/AccountSettings/AccountSettings"
 import Chat from "./components/Chat/Chat"
 import CheckAppoinment from "./components/CheckAppoinment/CheckAppoinment";
+import AI_Response from "./components/AI_Response/AI_Response";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,9 @@ const router = createBrowserRouter([
   {
     path: "/appoinment",
     element: <CheckAppoinment />
+  }, {
+    path: "/response",
+    element: <AI_Response />
   }
  
 ]);
