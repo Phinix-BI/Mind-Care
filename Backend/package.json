@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@google-ai/generativelanguage": "^2.1.0",
     "@google/generative-ai": "^0.2.1",
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
