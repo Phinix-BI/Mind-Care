@@ -15,7 +15,7 @@ import userAssessmentRouter from './routes/userAssessmentRouter.js'
 import AdminAssessmentRouter from "./routes/AdminAssessmentRouter.js"
 import initializeSocket from './Socket.js';
 import DrAppointmentRouter from "./routes/DrAppointmentRouter.js";
-
+import AiAssessmentRouter from "./routes/AiAssessmentRouter.js";
 import connectDB from './db/index.js';
 
 const Port = 3000; // Port number
@@ -33,7 +33,7 @@ app.use('/api', UserLoginRoute);
 app.use('/api', userAssessmentRouter);
 app.use('/api', AdminAssessmentRouter);
 app.use('/api', DrAppointmentRouter);
-
+app.use('/api',AiAssessmentRouter);
 
 
 app.use(cors());
@@ -115,5 +115,7 @@ app.put('/dr/req/acceptstatus',DrAppointmentRouter);
 
 app.delete('/dr/appointment/delete',DrAppointmentRouter);
 
+//AI assessment
+app.get('/ai/assessment/:token', AiAssessmentRouter);
 
 const httpServer = server.listen(Port, () => console.log(`Server running on port: http://localhost:${Port}`)); // Start the server

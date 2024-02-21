@@ -1,101 +1,115 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef, useLayoutEffect } from 'react';
 import Styles from './MCQ.module.css';
-import { GrFormPreviousLink } from "react-icons/gr";
-import { GrFormNextLink } from "react-icons/gr";
-import { GiTireIronCross } from "react-icons/gi";
+import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
+import { GiTireIronCross } from 'react-icons/gi';
 import Preview from '../Preview/Preview';
+import AI_Response from '../AI_Response/AI_Response';
 import axios from 'axios';
 
 const MCQ = () => {
-    
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    // const [matching, setMatching] = useState(false);
-    const[matchIndex, setMatchIndex] = useState(-1);
-    const[assessment,setAssessment] = useState([]);
-    const [clickedOption, setClickedOption] = useState(null);
-    
-    const [showPreview, setShowPreview] = useState(false);
-    const [blurBG, setBlurBG] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [matchIndex, setMatchIndex] = useState(-1);
+  const [assessment, setAssessment] = useState([]);
+  const [clickedOption, setClickedOption] = useState(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [blurBG, setBlurBG] = useState(false);
+  const [disprev, setDisprev] = useState(false);
+  const [disnext, setDisnext] = useState(false);
+  const [dissubmit, setDissubmit] = useState(false);
+  const [showResult, setShowResult] = useState(false);
 
-    const [disprev, setDisprev] = useState(false);
-    const [disnext, setDisnext] = useState(false);
-    const [dissubmit, setDissubmit] = useState(false);
+  const isInitialRender = useRef(true);
+  const localUserId = localStorage.getItem('token');
 
-    const localUserId = localStorage.getItem('token');
-
-    //CALL POST API TO SAVE USER RESPONSE
-    const handleNext = () => {
-        if (currentQuestion < assessment.length - 1) {
-          setCurrentQuestion(currentQuestion + 1);
-          setMatchIndex(-1);
-          setClickedOption(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/admin/assessment/get');
+        if (response.data.data[0]) {
+          setAssessment(response.data.data[0].slice());
+          console.log(response.data.data[0]);
+        } else {
+          console.error('No assessment data found.');
         }
-        
-      };
-    
-    //CALL PATCH API TO UPDATE USER RESPONSE
-    const handlePrev = () => {
-        if (currentQuestion > 0) {
-          setCurrentQuestion(currentQuestion - 1);
-          setMatchIndex(-1);
-          setClickedOption(null);
-        }
-        
-      };
-
-    //CALL POST API TO SAVE LAST USER RESPONSE AND SEND THE FULL RESPONSE FROM DATABASE TO THE BACKEND
-    const handleSubmit = () => {
-        console.log('Submit button clicked');
-        setShowPreview(true);
-        setBlurBG(true);
-
-        setTimeout(() => {
-          setDisnext(true);
-          setDisprev(true);
-          setDissubmit(true);
-        }, 1000);
+      } catch (error) {
+        console.error('Error fetching assessment data:', error);
       }
-      const handlePreview = () => {
-        setShowPreview(false);
-        setBlurBG(false);
-        setDisnext(false);
-        setDisprev(false);
-        setDissubmit(false);
+    };
+
+    fetchData();
+  }, []);
+
+ 
+  useEffect(() => {
+    const delay = 500; // Adjust the delay as needed
+    const timerId = setTimeout(() => {
+      if (assessment.length > 0) {
+        speak(assessment[currentQuestion].QuestionText);
       }
+    }, delay);
 
+    return () => clearTimeout(timerId); // Cleanup on component unmount
 
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get("http://localhost:3000/admin/assessment/get");
-            if (response.data.data[0]) {
-              setAssessment(response.data.data[0].slice());
-              console.log(response.data.data[0]);
-            } else {
-              console.error("No assessment data found.");
-            }
-          } catch (error) {
-            console.error("Error fetching assessment data:", error);
-          }
-        };
-    
-        fetchData();
-      },[])
+  }, [currentQuestion, assessment.length]);
 
-      const handelOptionCLick = async (userText) => {
-        try{
-        const response = await axios.post("http://localhost:3000/user/userAssessment/save",
-        {userRes : userText, QuestionName:currentQuestionData.QuestionText , token:localUserId})
-        }catch(err){
-          console.log(err);
-        }
-      }
-      
-      if (assessment.length === 0) {
-        return <h1>Loading.......</h1>;
-      }
+  const speak = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voices = speechSynthesis.getVoices();
+    utterance.voice = voices[0];
+    speechSynthesis.speak(utterance);
+  };
 
-      const currentQuestionData = assessment[currentQuestion];
+  const handleNext = () => {
+    if (currentQuestion < assessment.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setMatchIndex(-1);
+      setClickedOption(null);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+      setMatchIndex(-1);
+      setClickedOption(null);
+    }
+  };
+
+  const handleSubmit = () => {
+    console.log('Submit button clicked');
+    setShowPreview(true);
+    setBlurBG(true);
+
+    setTimeout(() => {
+      setDisnext(true);
+      setDisprev(true);
+      setDissubmit(true);
+    }, 1000);
+  };
+
+  const handlePreview = () => {
+    setShowPreview(false);
+    setBlurBG(false);
+    setDisnext(false);
+    setDisprev(false);
+    setDissubmit(false);
+  };
+
+  const handelAIResponse = async () => {
+    setShowResult(true);
+  };
+
+  const handelOptionCLick = async (userText) => {
+    try {
+      const response = await axios.post('http://localhost:3000/user/userAssessment/save', {
+        userRes: userText,
+        QuestionName: currentQuestionData.QuestionText,
+        token: localUserId,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 
       // voice part
@@ -142,12 +156,7 @@ const MCQ = () => {
           };
           
           recognition.onend = async function () {
-            // Set the flag to false when recognition ends
-             
-            // Restart recognition only if not currently processing a result
-            // if (!isRecognitionProcessing) {
-            //   recognition.start();
-            // }
+           
           };
           
           recognition.start();
@@ -159,11 +168,20 @@ const MCQ = () => {
         }
       
       }
-      enableVoiceRecognition();
-     
 
+      
+        enableVoiceRecognition();
+      
+      if (assessment.length === 0) {
+        return <h1>Loading.......</h1>;
+      }
+
+      const currentQuestionData = assessment[currentQuestion];
+     
     
   return (
+    !showResult ?(
+    <>
   <div className={`bg-white flex justify-center h-screen `}>
   <div className="absolute isolate px-6 pt-14 lg:px-8 max-w-screen-xl">
   <div className={`${blurBG ? 'opacity-20' : ''}`}>
@@ -218,12 +236,16 @@ const MCQ = () => {
         <div className='absolute top-40 right-11.25' style={{ "right": 180, "top": 180 }}>
           <div onClick={handlePreview}><GiTireIronCross /></div>
         </div>
-        <div><Preview userToken = {localUserId}/></div>
+        <div><Preview userToken = {localUserId} handelAIResponse={handelAIResponse}/></div>
       </div>
     )}
   </div>
 </div>
+</>):
+(
+  <AI_Response />
 )
+) 
 }
 
 export default MCQ;

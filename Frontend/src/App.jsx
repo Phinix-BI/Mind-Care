@@ -57,10 +57,12 @@ const router = createBrowserRouter([
   {
     path: "/appoinment",
     element: <CheckAppoinment />
-  }, {
+  }, 
+  {
     path: "/response",
     element: <AI_Response />
-  }
+  },
+  
  
 ]);
 function App() {

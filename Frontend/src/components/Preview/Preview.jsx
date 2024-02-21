@@ -3,7 +3,7 @@ import { GrPrevious, GrNext } from "react-icons/gr";
 import axios from "axios";
 // import { set } from "mongoose";
 // import jwt from "jsonwebtoken";
-const Preview = (props) => {
+const Preview = ({props,handelAIResponse}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [assessment, setAssessment] = useState([]);
   const[userChoosenOption, setUserChoosenOption] = useState([]);
@@ -22,14 +22,16 @@ const Preview = (props) => {
     }
   };
 
- 
+  console.log(userToken);
 
   const handelFinalSubmission = async() => {  
     try{
       const response =  await axios.post(`http://localhost:3000/user/userAssessment/submit`,{
-        token :  props.userToken ,
+        token :  userToken ,
         finalSubmit : true
       })
+
+      handelAIResponse();
       
     }catch(error){
       console.error("Error fetching assessment data:", error);
@@ -37,6 +39,10 @@ const Preview = (props) => {
    
   };
 
+  // const finalAIResponse = async() => {
+  
+  //   handelAIResponse();
+  // }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -109,7 +115,7 @@ const Preview = (props) => {
             <p>Loading...</p>
           )}
           {currentSlide === assessment.length - 1 && (
-            <button className="p-3 bg-blue-500 float-right text-white rounded-lg" onClick={handelFinalSubmission}>
+            <button className="p-3 bg-blue-500 float-right text-white rounded-lg" onClick={ handelFinalSubmission}>
               Submit
             </button>
           )}
