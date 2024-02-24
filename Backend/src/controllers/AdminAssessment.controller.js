@@ -1,5 +1,6 @@
 import { get } from 'mongoose'
 import Question from '../models/QuestionModel.js';
+import { defaultQuestions } from '../constants.js';
 // import * as dotenv from "dotenv"
 
 
@@ -7,8 +8,18 @@ import Question from '../models/QuestionModel.js';
 //get the questions
 export const GetUserAssessment = async (req, res) => {
     try {
-        const getSavedData = await Question.find({ customid: "mindcareAdmin" })
-        console.log("Data receive successfully")
+        let getSavedData = await Question.find({ customid: "mindcareAdmin" });
+
+        const defaultData =  defaultQuestions;
+          
+
+       if (!getSavedData || getSavedData.length === 0) {
+            const response = await Question.insertMany({ customid: "mindcareAdmin", question: defaultData });
+            getSavedData = response; // Update the value after insertion
+        }
+
+        console.log("Data receive successfully");
+
         res.status(202).json({ data: getSavedData.map((data) => data.question)})
 
     } catch (error) {
