@@ -4,14 +4,15 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 
 const navigation = [
-  { name: 'Diagnose ', href: '#' },
+  { name: 'Diagnose ', href: '/DiagnosTest' },
   { name: '1:1 AI Therapy', href: 'chat' },
   { name: 'Book Appointment', href: 'FindDoctors' },
   { name: 'About Us', href: '#' },
 ]
 
 const Navbar = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   return (
     <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center justify-between p-6 mx-10 lg:px-8" aria-label="Global">

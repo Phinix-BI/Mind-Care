@@ -1,4 +1,5 @@
 import {  CalendarDaysIcon, ChatBubbleLeftRightIcon,ClockIcon ,ClipboardDocumentCheckIcon} from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom';
 
 const features = [
   {
@@ -6,24 +7,28 @@ const features = [
     description:
       'Quickly gain insights into your well-being with our confidential assessment. Answer tailored questions for personalized support and self-discovery.',
     icon: ClipboardDocumentCheckIcon,
+    link: 'DiagnosTest',
   },
   {
     name: '1:1 Chat with AI Therapist',
     description:
       'Connect confidentially 24/7 with our AI therapy chat. Receive immediate support, coping strategies, and a virtual listening ear.',
     icon: ChatBubbleLeftRightIcon,
+    link: 'chat',
   },
   {
     name: 'Appointments Booking',
     description:
       'Take control of your well-being. Easily schedule virtual sessions with licensed professionals for a hassle-free and confidential experience.',
     icon: CalendarDaysIcon,
+    link: 'FindDoctors',
   },
   {
     name: '24/7 AI Therapist ',
     description:
       'Access support anytime with our round-the-clock AI therapist. Prioritize your mental health with immediate guidance and companionship.',
     icon: ClockIcon,
+
   },
 ]
 
@@ -44,15 +49,17 @@ export default function Example() {
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
           <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
             {features.map((feature) => (
+              <Link to={feature.link} key={feature.name}>
               <div key={feature.name} className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-gray-900">
                   <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                    <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
+                    <feature.icon className="h-6 w-6 text-white"  aria-hidden="true" />
                   </div>
                   {feature.name}
                 </dt>
                 <dd className="mt-2 text-base leading-7 text-gray-600">{feature.description}</dd>
               </div>
+              </Link>
             ))}
           </dl>
         </div>

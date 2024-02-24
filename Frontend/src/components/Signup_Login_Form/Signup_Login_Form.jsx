@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,useNavigate,
+} from "react-router-dom";
 import { FaUser,FaKey} from "react-icons/fa";
 import { GrMail } from "react-icons/gr";
 import axios from 'axios';
@@ -7,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PasswordInput from '../PasswordInput/PasswordInput';
 import IconComponent from '../IconComponent/IconComponent';
 import './Signup_Login_Form.css';
+// import { navigate } from '@reach/router';
 
 
 const Signup_Login_Form = () => {
@@ -21,6 +28,9 @@ const Signup_Login_Form = () => {
   const [otp, setOtp] = useState('');
   const [role,setRole] = useState('Patient');
   const[loader,setLoader] = useState(false);
+  // const [loginSuccess, setLoginSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleRegisterClick = async (e) => {
     e.preventDefault();
@@ -57,6 +67,7 @@ const Signup_Login_Form = () => {
 
       localStorage.setItem('token', response.data.token);
 
+      navigate('/');
       toast(response.data.message, {
         position: "top-right",
         autoClose: 1200,
@@ -209,6 +220,7 @@ const Signup_Login_Form = () => {
  
 
   return (
+  
     <div className={`form-main-container ${isSignUpMode  ? 'sign-up-mode' : ''}`}>
       <div className="forms-container">
         <div className="signin-signup">
@@ -336,6 +348,7 @@ const Signup_Login_Form = () => {
       </div>
       </div>
     </div>
+    
   );
 };
 
