@@ -2,6 +2,12 @@
 
 MindCare is a comprehensive mental health platform designed to provide support, assessment, and guidance to individuals seeking mental health assistance. Whether you're looking to assess your mental well-being, seek advice, or book appointments with qualified professionals, MindCare has got you covered. 🌟
 
+
+
+https://github.com/Phinix-BI/Mind-Care/assets/116413469/c9910a21-be19-4f1d-896b-61d85208d788
+
+
+
 ## Features 🚀
 
 - **User Authentication**: Users can easily sign up, log in, and log out to access MindCare's features securely. 🔐
