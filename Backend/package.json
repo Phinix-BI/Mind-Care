@@ -1,5 +1,9 @@
 {
   "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon src/app.js"
+  },
   "dependencies": {
     "@google-ai/generativelanguage": "^2.1.0",
     "@google/generative-ai": "^0.2.1",
@@ -14,7 +18,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",
     "nodemailer": "^6.9.8",
-    "nodemon": "^3.0.2",
+    "nodemon": "^3.1.9",
     "otp-generator": "^4.0.1",
     "socket.io": "^4.7.4",
     "string-similarity": "^4.0.4"
