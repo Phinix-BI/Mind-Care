@@ -23,10 +23,10 @@ const Preview = ({props,handelAIResponse}) => {
   };
 
   console.log(userToken);
-
+ 
   const handelFinalSubmission = async() => {  
     try{
-      const response =  await axios.post(`http://localhost:3000/user/userAssessment/submit`,{
+      const response =  await axios.post(` https://mind-care-backend.vercel.app/user/userAssessment/submit`,{
         token :  userToken ,
         finalSubmit : true
       })
@@ -47,7 +47,7 @@ const Preview = ({props,handelAIResponse}) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/admin/assessment/get"
+          " https://mind-care-backend.vercel.app/admin/assessment/get"
         );
         if (response.data.data[0]) {
           setAssessment(response.data.data[0].slice());
@@ -66,7 +66,7 @@ const Preview = ({props,handelAIResponse}) => {
   useEffect(() => {
       const fetchUserAssessment = async() => { 
         try{
-        const response =  await axios.get(`http://localhost:3000/user/userAssessment/question`,
+        const response =  await axios.get(` https://mind-care-backend.vercel.app/user/userAssessment/question`,
         {
           params: { userToken: userToken } // Include data as query parameters
         }

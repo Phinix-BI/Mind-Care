@@ -105,7 +105,7 @@ const MCQ = () => {
 
   const handelOptionCLick = async (userText) => {
     try {
-      const response = await axios.post('http://localhost:3000/user/userAssessment/save', {
+      const response = await axios.post(' https://mind-care-backend.vercel.app/user/userAssessment/save', {
         userRes: userText,
         QuestionName: currentQuestionData.QuestionText,
         token: localUserId,
@@ -138,7 +138,7 @@ const MCQ = () => {
             console.log(spokenText);
             
             // console.log(localUserId);
-            const response = await axios.post("http://localhost:3000/user/userAssessment/save",
+            const response = await axios.post(" https://mind-care-backend.vercel.app/user/userAssessment/save",
             {userRes : spokenText, QuestionName:currentQuestionData.QuestionText , token:localUserId})
            
             console.log(response.data);
