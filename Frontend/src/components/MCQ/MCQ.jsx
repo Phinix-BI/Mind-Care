@@ -22,6 +22,10 @@ const MCQ = () => {
   const localUserId = localStorage.getItem('token');
 
   useEffect(() => {
+    if(localStorage.getItem('token') === null){
+      window.location.href = '/login';
+    }
+    
     const fetchData = async () => {
       try {
         const response = await axios.get('https://mind-care-backend.vercel.app/admin/assessment/get');
