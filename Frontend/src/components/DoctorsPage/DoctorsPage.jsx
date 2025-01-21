@@ -15,12 +15,12 @@ const DoctorsPage = () => {
 
     useEffect(() => {
         const getDoctors = async () => {
-            const response = await axios.get('http://localhost:3000/doctors/profile');
+            const response = await axios.get('https://mind-care-backend.vercel.app/doctors/profile');
             setAllDoctors(response.data);
         };
 
         const getDoctorId = async () => {
-            const response = await axios.get('http://localhost:3000/user/profile', {
+            const response = await axios.get('https://mind-care-backend.vercel.app/user/profile', {
                 headers: {
                     'x-auth-token': localStorage.getItem('token'),
                 },

@@ -12,7 +12,7 @@ const AI_Response = () => {
   useEffect(() => {
     const handelAIResponse = async() => {
       try{
-        const response = await axios.get(`http://localhost:3000/ai/assessment/${localUserId}`);
+        const response = await axios.get(`https://mind-care-backend.vercel.app/ai/assessment/${localUserId}`);
         setAiResponse(response.data);
         console.log(response.data);
         console.log(aiResponse);

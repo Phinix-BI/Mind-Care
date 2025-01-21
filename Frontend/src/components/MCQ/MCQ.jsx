@@ -24,7 +24,7 @@ const MCQ = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/admin/assessment/get');
+        const response = await axios.get('https://mind-care-backend.vercel.app/admin/assessment/get');
         if (response.data.data[0]) {
           setAssessment(response.data.data[0].slice());
           console.log(response.data.data[0]);

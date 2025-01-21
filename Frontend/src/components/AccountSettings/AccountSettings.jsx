@@ -37,7 +37,7 @@ const AccountSettings = ({onUpdate}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user/profile', {
+                const response = await axios.get('https://mind-care-backend.vercel.app/user/profile', {
                     headers: {
                         'x-auth-token': localStorage.getItem('token'),
                     },
@@ -98,7 +98,7 @@ const AccountSettings = ({onUpdate}) => {
             if (image) {
                 formData.append('image', image);
             }
-            const response = await axios.patch('http://localhost:3000/user/profile/:id', formData, {
+            const response = await axios.patch('https://mind-care-backend.vercel.app/user/profile/:id', formData, {
                 headers: {
                     'x-auth-token': localStorage.getItem('token'),
                     'Content-Type': 'application/json',

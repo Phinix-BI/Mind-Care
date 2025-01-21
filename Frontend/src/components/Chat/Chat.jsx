@@ -6,7 +6,7 @@ import TypingBox from '../TypingBox/TypingBox';
 import Navbar from '../common/Navbar2.0/Navbar2.0'
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3000');
+const socket = io('https://mind-care-backend.vercel.app');
 
 const Chat = () => {
   const [usermessage, setUsermessage] = useState([]); // [1]

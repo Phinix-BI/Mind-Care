@@ -14,7 +14,7 @@ const CheckAppoinment = () => {
 
         const getAppoinment = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/dr/appointment/details',{
+                const response = await axios.get('https://mind-care-backend.vercel.app/dr/appointment/details',{
                     params:{
                         drToken:localStorage.getItem('token')
                     }

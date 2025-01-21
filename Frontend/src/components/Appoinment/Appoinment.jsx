@@ -10,7 +10,7 @@ const Appoinment = (props) => {
     
     const handelCross = async () => {
         try {
-            const response = await axios.delete('http://localhost:3000/dr/appointment/delete',
+            const response = await axios.delete('https://mind-care-backend.vercel.app/dr/appointment/delete',
            
             {
                 params:{
@@ -28,7 +28,7 @@ const Appoinment = (props) => {
 
     const withdrawRequest = async() => {
 
-        const response = await axios.delete('http://localhost:3000/user/dr/id/delete',
+        const response = await axios.delete('https://mind-care-backend.vercel.app/user/dr/id/delete',
         {
             params:{
                 drToken:localStorage.getItem('token'),
@@ -41,7 +41,7 @@ const Appoinment = (props) => {
    
     const handelDone = async () => {
         try{
-            const response = await axios.put('http://localhost:3000/dr/req/acceptstatus',{
+            const response = await axios.put('https://mind-care-backend.vercel.app/dr/req/acceptstatus',{
                 drToken:localStorage.getItem('token'),
                 userId:props.pateintId,
                 reqAccepted:true

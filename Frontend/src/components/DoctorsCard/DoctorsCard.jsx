@@ -31,7 +31,7 @@ const DoctorsCard = (prompt) => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/user/profile`, {
+        const response = await axios.get(`https://mind-care-backend.vercel.app/user/profile`, {
           headers: {
             'x-auth-token': localStorage.getItem('token'),
           },
@@ -52,7 +52,7 @@ const DoctorsCard = (prompt) => {
 
     // const fetchReqStatus = async () => {
     //   try {
-    //     const response = await axios.get(`http://localhost:3000/user/profile`, {
+    //     const response = await axios.get(`https://mind-care-backend.vercel.app/user/profile`, {
     //       headers: {
     //         'x-auth-token': localStorage.getItem('token'),
     //       },
@@ -76,7 +76,7 @@ const DoctorsCard = (prompt) => {
           fullName,email,age,gender,imageUrl,about
         }
 
-          const response = await axios.post('http://localhost:3000/dr/req/save',
+          const response = await axios.post('https://mind-care-backend.vercel.app/dr/req/save',
          
             {
               drId: prompt.drId,
@@ -92,7 +92,7 @@ const DoctorsCard = (prompt) => {
             setRequest(true);
 
             try{
-              const response = await axios.put('http://localhost:3000/user/dr/id/save',
+              const response = await axios.put('https://mind-care-backend.vercel.app/user/dr/id/save',
               {
                 drId: prompt.drId,
                 patientId: localStorage.getItem('token'),
@@ -107,7 +107,7 @@ const DoctorsCard = (prompt) => {
 
       const withdrawRequest = async() => {
 
-        const response = await axios.delete('http://localhost:3000/user/dr/id/delete',
+        const response = await axios.delete('https://mind-care-backend.vercel.app/user/dr/id/delete',
         {
           
           params: {
