@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "@google-ai/generativelanguage": "^2.1.0",

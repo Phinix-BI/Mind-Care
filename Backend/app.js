@@ -18,7 +18,7 @@ import DrAppointmentRouter from "./src/routes/DrAppointmentRouter.js";
 import AiAssessmentRouter from "./src/routes/AiAssessmentRouter.js";
 import connectDB from './src/db/index.js';
 
-const Port = 3000; // Port number
+const Port = process.env.PORT; // Port number
 const app = express(); // Create express app
 
 
