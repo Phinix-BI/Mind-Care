@@ -35,7 +35,7 @@ const Signup_Login_Form = () => {
   const handleRegisterClick = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/user/profile', {
+      const response = await axios.post('https://mind-care-backend.vercel.app/user/profile', {
         fullName, email, password,role
       });
 
@@ -61,7 +61,7 @@ const Signup_Login_Form = () => {
   const handleLoginClick = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/user/login', {
+      const response = await axios.post('https://mind-care-backend.vercel.app/user/login', {
         email, password ,role
       });
 
@@ -116,7 +116,7 @@ const Signup_Login_Form = () => {
     setIsOtpverified(false);
     setLoader(true);
     try{
-      const response = await axios.post('http://localhost:3000/user/forgot-password', {
+      const response = await axios.post('https://mind-care-backend.vercel.app/user/forgot-password', {
         email
       });
       toast(response.data.message, {
@@ -145,7 +145,7 @@ const Signup_Login_Form = () => {
   const handleOtpVerification = async(e)=>{
     e.preventDefault();
     try{
-      const response = await axios.post('http://localhost:3000/user/verify-otp',{
+      const response = await axios.post('https://mind-care-backend.vercel.app/user/verify-otp',{
         otp
       });
       toast(response.data.message, {
@@ -170,7 +170,7 @@ const Signup_Login_Form = () => {
   const handleResetPass = async(e)=>{
     e.preventDefault();
     try{
-      const response = await axios.post('http://localhost:3000/user/reset-password',{
+      const response = await axios.post('https://mind-care-backend.vercel.app/user/reset-password',{
        otp, password,confirmPassword
       });
       console.log(response);
