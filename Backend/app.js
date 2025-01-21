@@ -8,15 +8,15 @@ import stringSimilarity from 'string-similarity';
 import 'dotenv/config'// Import dotenv package to load environment variables
 
 
-import UserDataRoute from './routes/UserDataRoute.js'; // Import UserDataRoute.js functions
-import UserLoginRoute from './routes/UserLoginRoute.js'; // Import UserLoginRoute.js functions
-import  userLocationRouter  from "./routes/userLocationRouter.js";
-import userAssessmentRouter from './routes/userAssessmentRouter.js'
-import AdminAssessmentRouter from "./routes/AdminAssessmentRouter.js"
-import initializeSocket from './Socket.js';
-import DrAppointmentRouter from "./routes/DrAppointmentRouter.js";
-import AiAssessmentRouter from "./routes/AiAssessmentRouter.js";
-import connectDB from './db/index.js';
+import UserDataRoute from './src/routes/UserDataRoute.js'; // Import UserDataRoute.js functions
+import UserLoginRoute from './src/routes/UserLoginRoute.js'; // Import UserLoginRoute.js functions
+import  userLocationRouter  from "./src/routes/userLocationRouter.js";
+import userAssessmentRouter from './src/routes/userAssessmentRouter.js'
+import AdminAssessmentRouter from "./src/routes/AdminAssessmentRouter.js"
+import initializeSocket from './src/Socket.js';
+import DrAppointmentRouter from "./src/routes/DrAppointmentRouter.js";
+import AiAssessmentRouter from "./src/routes/AiAssessmentRouter.js";
+import connectDB from './src/db/index.js';
 
 const Port = 3000; // Port number
 const app = express(); // Create express app
